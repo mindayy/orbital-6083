@@ -1,7 +1,11 @@
 const LocalStrategy = require("passport-local").Strategy;
 const { authenticate } = require("passport");
 const { pool } = require("./dbConfig");
+<<<<<<< Updated upstream
 const bcrypt = require("bcrypt");
+=======
+const bcrypt = require("bcryptjs");
+>>>>>>> Stashed changes
 
 function initialize (passport) {
 const authenticateUser = (email, password, done)=>{
