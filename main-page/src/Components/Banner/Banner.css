@@ -1,0 +1,21 @@
+.banner {
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+    background: #F6EAFF;
+    display: flex;
+    height: 100%;
+}
+
+.brands-banner {
+    display: flex;
+    align-items: center;
+    margin-top: auto
+}
+
+.brands-banner img {
+    max-width: 100%;
+    max-height: auto;
+    width: auto;
+    height: auto;
+}
