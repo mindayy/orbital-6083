@@ -1,3 +1,6 @@
 2024/06/28-00:32:30.764 240f Reusing MANIFEST /Users/min/Documents/GitHub/orbital-6083/tmp/Default/Session Storage/MANIFEST-000001
 2024/06/28-00:32:30.770 240f Recovering log #3
 2024/06/28-00:32:30.785 240f Reusing old log /Users/min/Documents/GitHub/orbital-6083/tmp/Default/Session Storage/000003.log 
+2024/06/28-01:42:28.938 1707 Level-0 table #5: started
+2024/06/28-01:42:28.952 1707 Level-0 table #5: 21329 bytes OK
+2024/06/28-01:42:28.961 1707 Delete type=0 #3

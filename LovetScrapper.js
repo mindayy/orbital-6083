@@ -1,41 +1,76 @@
 const puppeteer = require('puppeteer');
+const admin = require('firebase-admin');
+const serviceAccount = require('/Users/min/Downloads/orbital-6083-firebase-adminsdk-qj4zv-4841409f8f.json');
+
+admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount),
+    databaseURL: "https://orbital-6083-default-rtdb.asia-southeast1.firebasedatabase.app"
+  });
+
+const database = admin.database();
 
 const scrapeData = async () => {
     const browser = await puppeteer.launch({
-        headless: false, 
+        headless: false,
         defaultViewport: false
     });
 
     const page = await browser.newPage();
-    await page.goto('https://lovet.sg/category/tops', {
+    await page.goto('https://lovet.sg/products', {
         waitUntil: "domcontentloaded"
-    }); 
+    });
 
-    // wait for products to load
-    //await page.waitForSelector('.items .row');
+    let results = [];
+    const lastPageNumber = 77; 
+    for (let index = 1; index <= lastPageNumber; index++) {
+        // await page.waitForSelector('.items .row');
 
-    // extract data for each product
-    const products = await page.$$('.productrow');
+        const productsOnPage = await page.evaluate(() => {
+            let data = [];
+            let elements = document.querySelectorAll('.productrow');
+            elements.forEach(product => {
+                try {
+                    const title = product.querySelector('.product-title a').textContent.trim();
+                    const price = product.querySelector('.product-price .uc-price').textContent.trim();
+                    const imageUrl = product.querySelector('.product-img img').getAttribute('src');
+        
+                    console.log(title, price, imageUrl);
+                    data.push({title, price, imageUrl});
+                } catch (error) {
+                    console.error('Error extracting product data', error);
+                }
+            });
+            return data;
+        });
 
-    
-    // Let items = [];
-    for (const product of products) {
-        try {
-            const title = await product.$eval('.product-title > a', element => element.textContent.trim());
-            const price = await product.$eval('.product-price > .uc-price', element => element.textContent.trim());
-            const imageUrl = await product.$eval('.product-img > a.ga_track.hover.gtm_processed > img', img => img.getAttribute('src'));
+        results = results.concat(productsOnPage);
 
-            console.log(title, price, imageUrl);
-            // items.push({title, price, imageUrl});
+        console.log(`Scraped page ${index} with ${productsOnPage.length} products`);
 
-        } catch (error) {
-            console.error('Error extracting product data', error);
+        // Navigate to the next page if it exists
+        if (index < lastPageNumber) {
+            const nextPageButton = await page.$('ul > li.next > a > span'); 
+            if (nextPageButton) {
+                await nextPageButton.click();
+                await page.waitForNavigation({ 
+                    waitUntil: 'domcontentloaded' 
+                });
+            } else {
+                console.log('No more pages to scrape.');
+                break;
+            }
         }
     }
+
     // Close the browser when done
     await browser.close();
+    // Output the results
+    console.log(results);
+
+    const ref = database.ref('lovet-products');
+    await ref.set(results);
+    console.log('Data uploaded to Firebase');
+    return results;
 };
 
-
 scrapeData();
-exports.scrapeData = scrapeData;
