@@ -3,9 +3,15 @@ import {getAuth, onAuthStateChanged, signOut} from "https://www.gstatic.com/fire
 import{getFirestore, getDoc, doc} from "https://www.gstatic.com/firebasejs/10.11.1/firebase-firestore.js"
 
 const firebaseConfig = {
-    //YOUR COPIED FIREBASE PART SHOULD BE HERE
- //WATCH THIS VIDEO TO LEARN WHAT TO PUT HERE   https://youtu.be/_Xczf06n6x0
-  };
+  apiKey: "AIzaSyAjfrq87DU3kD0s2EyoWet4DnOb6V0fP7k",
+  authDomain: "orbital-6083.firebaseapp.com",
+  databaseURL: "https://orbital-6083-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "orbital-6083",
+  storageBucket: "orbital-6083.appspot.com",
+  messagingSenderId: "237207599762",
+  appId: "1:237207599762:web:d56c32a9ca17fb8c88444b",
+  measurementId: "G-4WJC63FRZB"
+};
  
   // Initialize Firebase
   const app = initializeApp(firebaseConfig);
