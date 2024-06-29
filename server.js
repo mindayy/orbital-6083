@@ -1,11 +1,7 @@
 const express = require('express');
 const app = express()
 const { pool } = require("./dbConfig");
-<<<<<<< Updated upstream
-const bcrypt = require("bcrypt");
-=======
 const bcrypt = require("bcryptjs");
->>>>>>> Stashed changes
 const session = require("express-session");
 const flash = require("express-flash");
 const passport = require("passport");
@@ -24,7 +20,7 @@ app.use(express.urlencoded({extended: false }));
 
 app.use(
     session({
-        secret: 'secret',
+        secret: "secret",
 
         resave: false,
 
@@ -37,8 +33,8 @@ app.use(passport.session());
 
 app.use(flash());
 
-app.get('/',(req,res) => {
-    res.render('index')
+app.get("/",(req,res) => {
+    res.render("index")
 });
 
 app.get("/users/register", checkAuthenticated, (req, res) => {
@@ -53,10 +49,20 @@ app.get("/users/dashboard", checkNotAuthenticated, (req, res) => {
     res.render("dashboard", { user: "Carting Express" }); //user: req.user.name gets name from user instead
 });
 
+/*
 app.get("/users/logout", (req, res) => {
     req.logOut();
     req.flash("success_msg", "You have logged out");
     res.redirect("/users/login");
+});
+*/
+
+app.get("/users/logout", (req,res) => {
+    req.logOut(function(err) {
+        if (err) { return next(err); }
+        req.flash("success_msg", "You have successfully logged out.");
+        res.redirect("/users/login");
+    });
 });
 
 app.post("/users/register", async (req, res) => {
@@ -112,7 +118,7 @@ app.post("/users/register", async (req, res) => {
                         RETURNING id, password`,[name,email,hashedPassword],
                         (err, results) => {
                             if (err){
-                                throw err
+                                throw err;
                             }
                             console.log(results.rows);
                             req.flash('success_msg', "You are now registered. Please log in");
