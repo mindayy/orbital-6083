@@ -1,0 +1,11 @@
+{
+    "java.debug.settings.onBuildFailureProceed": true,
+    "java.configuration.updateBuildConfiguration": "interactive",
+    "java.project.referencedLibraries": [
+        "lib/**/*.jar",
+        "/Users/min/Downloads/jar_files/**/*.jar",
+        "/Users/min/Downloads/jsoup-1.17.2-sources.jar",
+        "/Users/min/Downloads/jsoup-1.17.2 (1).jar",
+        "/Users/min/Downloads/jsoup-1.17.2.jar"
+    ]
+}

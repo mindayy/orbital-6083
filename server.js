@@ -1,7 +1,11 @@
 const express = require('express');
 const app = express()
 const { pool } = require("./dbConfig");
+<<<<<<< Updated upstream
 const bcrypt = require("bcrypt");
+=======
+const bcrypt = require("bcryptjs");
+>>>>>>> Stashed changes
 const session = require("express-session");
 const flash = require("express-flash");
 const passport = require("passport");

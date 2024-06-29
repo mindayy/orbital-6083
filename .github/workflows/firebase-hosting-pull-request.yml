@@ -17,5 +17,5 @@ jobs:
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
-          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_ORBITAL_MINXIN }}
-          projectId: orbital-minxin
+          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_ORBITAL_6083 }}
+          projectId: orbital-6083
