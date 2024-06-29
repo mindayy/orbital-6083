@@ -1,3 +1,6 @@
-2024/06/28-00:16:47.499 240f Reusing MANIFEST /Users/min/Documents/GitHub/orbital-6083/tmp/Default/Local Storage/leveldb/MANIFEST-000001
-2024/06/28-00:16:47.502 240f Recovering log #3
-2024/06/28-00:16:47.502 240f Reusing old log /Users/min/Documents/GitHub/orbital-6083/tmp/Default/Local Storage/leveldb/000003.log 
+2024/06/28-00:32:30.724 240f Reusing MANIFEST /Users/min/Documents/GitHub/orbital-6083/tmp/Default/Local Storage/leveldb/MANIFEST-000001
+2024/06/28-00:32:30.725 240f Recovering log #3
+2024/06/28-00:32:30.725 240f Reusing old log /Users/min/Documents/GitHub/orbital-6083/tmp/Default/Local Storage/leveldb/000003.log 
+2024/06/28-01:39:44.162 3003 Level-0 table #5: started
+2024/06/28-01:39:44.168 3003 Level-0 table #5: 54290 bytes OK
+2024/06/28-01:39:44.170 3003 Delete type=0 #3

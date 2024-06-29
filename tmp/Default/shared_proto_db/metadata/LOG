@@ -1,3 +1,3 @@
-2024/06/28-00:32:30.895 f203 Reusing MANIFEST /Users/min/Documents/GitHub/orbital-6083/tmp/Default/shared_proto_db/metadata/MANIFEST-000001
-2024/06/28-00:32:30.896 f203 Recovering log #3
-2024/06/28-00:32:30.903 f203 Reusing old log /Users/min/Documents/GitHub/orbital-6083/tmp/Default/shared_proto_db/metadata/000003.log 
+2024/06/28-21:00:25.949 10403 Reusing MANIFEST /Users/min/Documents/GitHub/orbital-6083/tmp/Default/shared_proto_db/metadata/MANIFEST-000001
+2024/06/28-21:00:25.950 10403 Recovering log #3
+2024/06/28-21:00:25.972 10403 Reusing old log /Users/min/Documents/GitHub/orbital-6083/tmp/Default/shared_proto_db/metadata/000003.log 
