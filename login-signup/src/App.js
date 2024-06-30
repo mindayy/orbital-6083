@@ -1,3 +1,4 @@
+import React from 'react';
 import './App.css';
 import LoginSignup from './Components/LoginSignup/LoginSignup.jsx';
 

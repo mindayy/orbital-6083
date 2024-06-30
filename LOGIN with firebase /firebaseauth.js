@@ -27,6 +27,7 @@ const firebaseConfig = {
         messageDiv.style.opacity=0;
     },5000);
  }
+ 
  const signUp=document.getElementById('submitSignUp');
  signUp.addEventListener('click', (event)=>{
     event.preventDefault();
