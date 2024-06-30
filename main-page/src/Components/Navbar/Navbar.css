@@ -1,5 +1,3 @@
-
-
 .navbar{
     display: flex;
     justify-content: space-around;
@@ -11,7 +9,6 @@
 .nav-logo{
     display: flex;
     align-items: center;
-    margin-left: 3%;
     width: 10%;
 }
 
@@ -20,38 +17,73 @@
     height: auto;
 }
 
-.nav-search-profile-likes{
+.nav-profile {
+    display: flex;
+    justify-content: space-around;
+}
+.nav-profile img {
     display: flex;
     align-items: center;
-    gap: 20px;
-    margin-left: auto;
-    margin-right: 5%;
+    width: 40px;
+    height: 40px;
+    height: auto;
 }
-
-.nav-search-profile-likes button{
-    width: 150px;
-    height: 50px;
+.nav-profile button{
+    width: 130px;
+    height: 45px;
+    margin-left: 5%;
     outline: none;
     border: 1px solid #70503F;
     border-radius: 75px;
     color: #70503F;
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 100;
     background-color: white;
     cursor: pointer;
+}
+
+.nav-likes img {
+    display: flex;
+    align-items: center;
+    margin-left: 20px;
 }
 
 .nav-likes-count{
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 22px;
-    height: 22px;
-    margin-top: 15px;
-    margin-left: -40px;
-    border-radius: 11px;
+    width: 20px;
+    height: 20px;
+    margin-top: 18px;
+    border-radius: 16px;
     font-size: 12px;
     color: white;
     background: #70503F;
 }
 
+.nav-search {
+    display: flex;
+    gap: 20px;
+    margin-left: 250px ;
+    margin-right: 10%;
+    background-color: #F6EAFF;
+    width: 100%;
+    box-shadow: 0px 0px 8px #E0B4FF;
+    align-items: center;
+}
+
+.nav-search img {
+    max-height: 40px;
+    width: auto;
+}
+
+.nav-search input {
+    background-color: transparent;
+    border: none;
+    height: auto;
+    width: 100%;
+    display: flex;
+    font-size: 1.1rem;
+    width: 100%;
+    margin-left: 20px;
+}

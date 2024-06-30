@@ -43,8 +43,8 @@ const ProductDataSSD = () => {
               <h3>SSD</h3>
               <img src={product.imageUrl} alt={product.title} />
               <div className="product-info">
-                <h4>{product.title}</h4>
-                <p>{product.price}</p>
+                <h4><a href={product.productUrl} target="_blank" rel="noopener noreferrer">{product.title}</a></h4>
+                <p>${product.price}0</p>
               </div>
             </div>
           ))}

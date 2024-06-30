@@ -31,6 +31,14 @@
     color: #70503F;
     text-align: left;
 }
+
+.product-info a {
+    color: #70503F;
+}
+
+.product-info a:hover {
+    color: #E0B4FF; 
+  }
   
 .product-info p {
     font-size: 16px;

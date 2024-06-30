@@ -13,13 +13,18 @@ const Navbar = () => {
             <div className='nav-logo'>
                 <img src={logo} alt="" />
             </div>
-            <div className='nav-search-profile-likes'>
+            <div className='nav-search'>
+                <input placeholder='Type to search products...' />
                 <img src={search} alt='' />
+            </div>
+            <div className='nav-profile' >
                 <img src={profile} alt='' />
                 <button>Sign Up | Login</button>
-                <img src={likes} alt='' />
-                <div className='nav-likes-count'>0</div>
             </div>
+            <div className='nav-likes' >
+                <img src={likes} alt='' />
+            </div>
+            <div className='nav-likes-count'>0</div>
         </div>
     )
 }
