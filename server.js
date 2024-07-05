@@ -5,11 +5,9 @@ const bcrypt = require("bcryptjs");
 const session = require("express-session");
 const flash = require("express-flash");
 const passport = require("passport");
-
 const initializePassport = require("./passportConfig");
 
 initializePassport(passport);
-
 
 
 const PORT = process.env.PORT || 4000;
