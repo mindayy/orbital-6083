@@ -1,46 +1,95 @@
 import React, { useState } from 'react';
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { auth } from '../firebaseConfig';
 import './Auth.css';
+
 
 const Auth = () => {
   const [isSignUp, setIsSignUp] = useState(true);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [fName, setFName] = useState("");
+  const [lName, setLName] = useState("");
 
   const toggleAuthMode = () => {
     setIsSignUp(!isSignUp);
+  };
+
+  const handleSignUp = (e) => {
+    e.preventDefault();
+    createUserWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        // Signed in 
+        const user = userCredential.user;
+        console.log('User signed up:', user);
+      })
+      .catch((error) => {
+        console.error('Error signing up:', error);
+      });
+  };
+
+  const handleSignIn = (e) => {
+    e.preventDefault();
+    signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        // Signed in 
+        const user = userCredential.user;
+        console.log('User signed in:', user);
+      })
+      .catch((error) => {
+        console.error('Error signing in:', error);
+      });
+  };
+
+  const handleGoogleSignIn = () => {
+    const provider = new GoogleAuthProvider();
+    signInWithPopup(auth, provider)
+      .then((result) => {
+        const credential = GoogleAuthProvider.credentialFromResult(result);
+        const token = credential.accessToken;
+        const user = result.user;
+        console.log('User signed in with Google:', user);
+      }).catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        const email = error.email;
+        const credential = GoogleAuthProvider.credentialFromError(error);
+        console.error('Error signing in with Google:', errorMessage);
+      });
   };
 
   return (
     <div className="container">
       {isSignUp ? (
         <>
-          <h1 className="form-title">Register To Explore Carting Express Today!</h1>
-          <form method="post" action="">
+          <h1 className="form-title">Register</h1>
+          <form onSubmit={handleSignUp}>
             <div id="signUpMessage" className="messageDiv" style={{ display: 'none' }}></div>
             <div className="input-group">
               <i className="fas fa-user"></i>
-              <input type="text" id="fName" placeholder="First Name" required />
+              <input type="text" id="fName" placeholder="First Name" required value={fName} onChange={(e) => setFName(e.target.value)} />
               <label htmlFor="fName">First Name</label>
             </div>
             <div className="input-group">
               <i className="fas fa-user"></i>
-              <input type="text" id="lName" placeholder="Last Name" required />
+              <input type="text" id="lName" placeholder="Last Name" required value={lName} onChange={(e) => setLName(e.target.value)} />
               <label htmlFor="lName">Last Name</label>
             </div>
             <div className="input-group">
               <i className="fas fa-envelope"></i>
-              <input type="email" id="rEmail" placeholder="Email" required />
+              <input type="email" id="rEmail" placeholder="Email" required value={email} onChange={(e) => setEmail(e.target.value)} />
               <label htmlFor="rEmail">Email</label>
             </div>
             <div className="input-group">
               <i className="fas fa-lock"></i>
-              <input type="password" id="rPassword" placeholder="Password" required />
+              <input type="password" id="rPassword" placeholder="Password" required value={password} onChange={(e) => setPassword(e.target.value)} />
               <label htmlFor="rPassword">Password</label>
             </div>
-            <button className="btn" id="submitSignUp">Sign Up</button>
+            <button className="btn" id="submitSignUp" type="submit">Sign Up</button>
           </form>
           <p className="or">----------or--------</p>
           <div className="icons">
-            <i className="fab fa-google"></i>
-            <i className="fab fa-facebook"></i>
+            <i className="fab fa-google" onClick={handleGoogleSignIn}></i>
           </div>
           <div className="links">
             <p>Already Have Account?</p>
@@ -49,28 +98,25 @@ const Auth = () => {
         </>
       ) : (
         <>
-          <h1 className="form-title">Sign In and Explore Carting Express</h1>
-          <form method="post" action="">
+          <h1 className="form-title">Sign In</h1>
+          <form onSubmit={handleSignIn}>
             <div id="signInMessage" className="messageDiv" style={{ display: 'none' }}></div>
             <div className="input-group">
               <i className="fas fa-envelope"></i>
-              <input type="email" id="email" placeholder="Email" required />
+              <input type="email" id="email" placeholder="Email" required value={email} onChange={(e) => setEmail(e.target.value)} />
               <label htmlFor="email">Email</label>
             </div>
             <div className="input-group">
               <i className="fas fa-lock"></i>
-              <input type="password" id="password" placeholder="Password" required />
+              <input type="password" id="password" placeholder="Password" required value={password} onChange={(e) => setPassword(e.target.value)} />
               <label htmlFor="password">Password</label>
             </div>
-            <p className="recover">
-              <a href="#">Recover Password</a>
-            </p>
-            <button className="btn" id="submitSignIn">Sign In</button>
+
+            <button className="btn" id="submitSignIn" type="submit">Sign In</button>
           </form>
           <p className="or">----------or--------</p>
           <div className="icons">
-            <i className="fab fa-google"></i>
-            <i className="fab fa-facebook"></i>
+            <i className="fab fa-google" onClick={handleGoogleSignIn}></i>
           </div>
           <div className="links">
             <p>Don't have account yet?</p>
