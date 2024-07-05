@@ -4,7 +4,6 @@ import Home from './Pages/Home';
 import Products from './Pages/Products';
 import Auth from './Components/Auth';
 import Navbar from './Components/Navbar';
-import './Components/Form.css';
 
 
 function App() {
