@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { auth } from '../firebaseConfig';
 import './Auth.css';
-
 
 const Auth = () => {
   const [isSignUp, setIsSignUp] = useState(true);
@@ -10,9 +10,15 @@ const Auth = () => {
   const [password, setPassword] = useState("");
   const [fName, setFName] = useState("");
   const [lName, setLName] = useState("");
+  const [message, setMessage] = useState("");
+  const [error, setError] = useState("");
+
+  const navigate = useNavigate();
 
   const toggleAuthMode = () => {
     setIsSignUp(!isSignUp);
+    setMessage("");
+    setError("");
   };
 
   const handleSignUp = (e) => {
@@ -20,11 +26,15 @@ const Auth = () => {
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         // Signed in 
-        const user = userCredential.user;
-        console.log('User signed up:', user);
+        setMessage("Successfully Registered");
+        setTimeout(() => {
+          setIsSignUp(false);
+          setMessage("");
+          navigate("/auth");
+        }, 2000); // Redirect after 2 seconds
       })
       .catch((error) => {
-        console.error('Error signing up:', error);
+        setError("Error signing up: " + error.message);
       });
   };
 
@@ -33,11 +43,12 @@ const Auth = () => {
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         // Signed in 
-        const user = userCredential.user;
-        console.log('User signed in:', user);
+        setMessage("Successfully Signed In");
+        // Redirect to home page or other page
+        navigate("/products");
       })
       .catch((error) => {
-        console.error('Error signing in:', error);
+        setError("Error signing in: " + error.message);
       });
   };
 
@@ -60,11 +71,12 @@ const Auth = () => {
 
   return (
     <div className="container">
+      {message && <div className="messageDiv">{message}</div>}
+      {error && <div className="messageDiv">{error}</div>}
       {isSignUp ? (
         <>
           <h1 className="form-title">Register</h1>
           <form onSubmit={handleSignUp}>
-            <div id="signUpMessage" className="messageDiv" style={{ display: 'none' }}></div>
             <div className="input-group">
               <i className="fas fa-user"></i>
               <input type="text" id="fName" placeholder="First Name" required value={fName} onChange={(e) => setFName(e.target.value)} />
@@ -100,7 +112,6 @@ const Auth = () => {
         <>
           <h1 className="form-title">Sign In</h1>
           <form onSubmit={handleSignIn}>
-            <div id="signInMessage" className="messageDiv" style={{ display: 'none' }}></div>
             <div className="input-group">
               <i className="fas fa-envelope"></i>
               <input type="email" id="email" placeholder="Email" required value={email} onChange={(e) => setEmail(e.target.value)} />
