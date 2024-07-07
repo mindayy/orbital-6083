@@ -16,7 +16,7 @@ function App() {
           <Route exact path="/" element={<Home/>} />
           <Route path="/products" element={<Products/>} />
           <Route path="/auth" element={<Auth/>} />
-          <Route path="/profile" component={ProfilePage} />
+          <Route path="/profile" element={<ProfilePage/>} />
           <Route path="/search" element={<Search />} />
         </Routes>
       </div>
