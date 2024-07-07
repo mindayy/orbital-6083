@@ -20,7 +20,9 @@ const Navbar = () => {
                 <img src={search} alt='' />
             </div>
             <div className='nav-profile' >
+            <Link to="/profile">
                 <img src={profile} alt='' />
+            </Link>
                 <button onClick={() => navigate('/auth')}>Sign Up | Login</button>
                 <img src={likes} alt='' />
             </div>

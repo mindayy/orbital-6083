@@ -44,8 +44,8 @@ const Auth = () => {
       .then((userCredential) => {
         // Signed in 
         setMessage("Successfully Signed In");
-        // Redirect to home page or other page
-        navigate("/products");
+        // Redirect to profile page to complete profile set up 
+        navigate("/profile");
       })
       .catch((error) => {
         setError("Error signing in: " + error.message);
@@ -60,6 +60,7 @@ const Auth = () => {
         const token = credential.accessToken;
         const user = result.user;
         console.log('User signed in with Google:', user);
+        navigate("/profile"); // redirect to profile page
       }).catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
