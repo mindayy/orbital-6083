@@ -4,6 +4,7 @@ import Home from './Pages/Home';
 import Products from './Pages/Products';
 import Auth from './Components/Auth/Auth';
 import ProfilePage from './Components/ProfilePage/ProfilePage';
+import Search from './Pages/Search'; 
 
 
 
@@ -16,6 +17,7 @@ function App() {
           <Route path="/products" element={<Products/>} />
           <Route path="/auth" element={<Auth/>} />
           <Route path="/profile" component={ProfilePage} />
+          <Route path="/search" element={<Search />} />
         </Routes>
       </div>
     </Router>
