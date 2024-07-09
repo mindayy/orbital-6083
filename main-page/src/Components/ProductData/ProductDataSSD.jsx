@@ -8,7 +8,7 @@ const ProductDataSSD = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const productsRef = ref(database, '/SSS-products');
+    const productsRef = ref(database, '/SSD-products');
 
     get(productsRef).then((snapshot) => {
       if (snapshot.exists()) {
@@ -40,7 +40,7 @@ const ProductDataSSD = () => {
         <div className="products-list">
           {products.map((product) => (
             <div key={product.id} className="product-item">
-              <h3>SSD</h3>
+              <h3>{product.shop}</h3>
               <img src={product.imageUrl} alt={product.title} />
               <div className="product-info">
                 <h4><a href={product.productUrl} target="_blank" rel="noopener noreferrer">{product.title}</a></h4>

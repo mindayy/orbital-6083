@@ -14,7 +14,7 @@ const SearchResults = ({ searchQuery }) => {
       setError(null);
 
       try {
-        const productsRef1 = ref(database, '/SSS-products');
+        const productsRef1 = ref(database, '/SSD-products');
         const productsRef2 = ref(database, '/lovet-products');
 
         const snapshot1 = await get(productsRef1);

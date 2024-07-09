@@ -16,12 +16,12 @@ const scrapeData = async () => {
     });
 
     const page = await browser.newPage();
-    await page.goto('https://lovet.sg/products', {
+    await page.goto('https://www.shopsassydream.com/products', {
         waitUntil: 'domcontentloaded'
     });
 
     let results = [];
-    const lastPageNumber = 77;
+    const lastPageNumber = 28;
 
     for (let index = 1; index <= lastPageNumber; index++) {
         const productsOnPage = await page.evaluate(async () => {
@@ -30,16 +30,16 @@ const scrapeData = async () => {
 
             for (let product of elements) {
                 try {
-                    const shop = "Lovet";
+                    const shop = "SSD";
                     const title = product.querySelector('.product-title a').textContent.trim();
                     const priceText = product.querySelector('.product-price .uc-price').textContent.trim();
                     const imageUrl = product.querySelector('.product-img img').getAttribute('src');
                     const productUrl = product.querySelector('.product-title a').getAttribute('href');
-                    
-                    const price = parseFloat(priceText.replace(/[^\d.]/g, '')); // converts SGD $28.90 to just 28.9
+
+                    const price = parseFloat(priceText.replace(/[^\d.]/g, '')); // converts $28.90 to just 28.9
 
                     // extract available sizes
-                    const sizesList = Array.from(product.querySelectorAll('.size-options a.size-option'))
+                    const sizesList = Array.from(product.querySelectorAll('.product-variants a.product-size'))
                     .filter(sizeElement => !sizeElement.classList.contains('soldout'))
                     .map(sizeElement => sizeElement.textContent.trim());
 
@@ -58,7 +58,7 @@ const scrapeData = async () => {
 
         // Navigate to the next page if it exists
         if (index < lastPageNumber) {
-            const nextPageButton = await page.$('ul > li.next > a > span');
+            const nextPageButton = await page.$('ul > li.next > a ');
             if (nextPageButton) {
                 await nextPageButton.click();
                 await page.waitForNavigation({ waitUntil: 'domcontentloaded' });
@@ -76,7 +76,7 @@ const scrapeData = async () => {
     console.log(results);
 
     // Upload data to Firebase
-    const ref = database.ref('lovet-products');
+    const ref = database.ref('SSD-products');
     await ref.set(results);
     console.log('Data uploaded to Firebase');
 
