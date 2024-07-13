@@ -5,6 +5,7 @@ import Products from './Pages/Products';
 import Auth from './Components/Auth/Auth';
 import ProfilePage from './Components/ProfilePage/ProfilePage';
 import Search from './Pages/Search'; 
+import FilterBar from './Components/FilterBar/FilterBar';
 
 
 

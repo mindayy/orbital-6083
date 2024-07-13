@@ -1,0 +1,122 @@
+.filter-bar {
+    border-bottom: 1px solid #d4a776;
+    padding: 25px;
+    padding-right: 100px;
+    justify-content: space-between;
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    padding-bottom: 50px;
+}
+
+.filter-section-categories,
+.filter-section-size,
+.filter-section-price {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  
+}
+
+.filter-bar h3 {
+    color: #70503F;
+    margin-bottom: 10px;
+    font-size: 18px;
+    font-weight: 600;
+    padding: 20px;
+}
+
+.filter-section-categories .category-options,
+.filter-section-size .size-options{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); 
+    gap: 10px; 
+}
+
+.filter-section-price .price-options{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+
+.filter-section-categories .category-options label,
+.filter-section-size .size-options label,
+.filter-section-price .price-options label {
+    color: #70503F;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    margin-right: 10px;
+    margin-bottom: 5px;
+}
+
+.filter-section-price input[type="number"] {
+    width: 60px;
+    padding: 5px;
+    margin: 5px;
+    border: 1px solid #70503F;
+}
+
+.filter-section-price div input {
+    margin-left: 5px;
+    margin-right: 5px;
+    color: #70503F;
+}
+
+.filter-section-price div input::placeholder {
+    color: #b5a9a4;
+    font-size: 14px;
+}
+
+input[type='checkbox'], 
+input[type='radio']{
+    box-sizing: border-box;
+    appearance: none;
+    background: white;
+    outline: none; 
+    border: 2px solid #70503F; 
+    width: 14px;
+    height: 14px;
+    padding: 0; 
+    margin: 0; 
+  }
+  
+  input[type='checkbox']:checked,
+  input[type='radio']:checked {
+    background: #70503F;
+  }
+
+  input[type='checkbox']:checked::after {
+    content: '\2713'; 
+    font-size: 20px;
+    color: white; 
+    position: absolute;
+    top: 0.5px; /* Adjust position as needed */
+    left: 4px;
+  }
+.filter-section-categories input[type="checkbox"],
+.filter-section-size input[type="checkbox"],
+.filter-section-price input[type="radio"] {
+    margin-right: 10px;
+    padding: 10px
+}
+
+.apply-button-container {
+    display: flex;
+    align-self: flex-end;
+    bottom: 100px;
+    right: 150px;
+  }
+  
+.apply-button-container button {
+    padding: 8px 16px; /* adjust as necessary for button size */
+    font-size: 14px;
+    font-weight: bold;
+    border-radius: 0;
+    background-color: #70503F;
+}
+
+.apply-button-container button:hover {
+    background-color: #E0B4FF;
+}

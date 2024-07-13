@@ -1,16 +1,26 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Navbar from '../Components/Navbar/Navbar';
-import ProductDataSSD from '../Components/ProductData/ProductDataSSD';
-import ProductDataLovet from '../Components/ProductData/ProductDataLovet';
+import FilterBar from '../Components/FilterBar/FilterBar';
+import ProductData from '../Components/ProductData/ProductData';
 
 const Products = () => {
+    const [filters, setFilters] = useState({
+      categoryFilter: [],
+      sizeFilter: [],
+      priceFilter: { type: '', range: { min: '', max: '' } },
+    });
+  
+    const applyFilters = (newFilters) => {
+      setFilters(newFilters);
+    };
+  
     return (
-        <div>
-            <Navbar/>
-            <ProductDataSSD />
-            <ProductDataLovet />
-        </div>
-    )
-}
-
-export default Products
+      <div className="products-page">
+        <Navbar/>
+        <FilterBar applyFilters={applyFilters} />
+        <ProductData filters={filters} />
+      </div>
+    );
+  };
+  
+  export default Products;
