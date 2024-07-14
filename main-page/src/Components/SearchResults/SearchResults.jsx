@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { database } from '../firebaseConfig/index';
 import { ref, get } from 'firebase/database';
-import './SearchResults.css'; // Ensure to create and link your CSS file
+import '../ProductData/ProductData.css'; 
 
 const SearchResults = ({ searchQuery }) => {
   const [products, setProducts] = useState([]);
@@ -77,6 +77,15 @@ const SearchResults = ({ searchQuery }) => {
           {products.map((product) => (
             <div key={product.id} className="product-item">
               <h3>{product.shop}</h3>
+                <div className="size-list">
+                    {product.sizesList && product.sizesList.length > 0 && (
+                      <ul>
+                        {product.sizesList.map((size, index) => (
+                          <li key={index}>{size}</li>
+                        ))}
+                      </ul>
+                    )}
+                  </div>
               <img src={product.imageUrl} alt={product.title} />
               <div className="product-info">
                 <h4><a href={product.productUrl} target="_blank" rel="noopener noreferrer">{product.title}</a></h4>
