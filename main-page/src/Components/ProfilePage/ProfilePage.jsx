@@ -1,23 +1,25 @@
 import React, { useState, useEffect } from 'react';
-import { getAuth, updateProfile } from 'firebase/auth';
+import { getAuth, updateProfile, signOut } from 'firebase/auth';
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { useNavigate } from 'react-router-dom';
 import defaultProfilePic from '../Assets/defaultpfp.png';
 import './ProfilePage.css';
 
 const ProfilePage = () => {
   const auth = getAuth();
   const storage = getStorage();
+  const navigate = useNavigate();
   const [user, setUser] = useState(null);
   const [displayName, setDisplayName] = useState('');
-  const [bio, setBio] = useState('');
   const [photoURL, setPhotoURL] = useState('');
+  const [message, setMessage] = useState('');
+  const [error, setError] = useState('');
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((currentUser) => {
       if (currentUser) {
         setUser(currentUser);
         setDisplayName(currentUser.displayName || '');
-        setBio(currentUser.bio || ''); // bio is not a standard property in Firebase, consider storing it in a database
         setPhotoURL(currentUser.photoURL || defaultProfilePic);
       }
     });
@@ -31,7 +33,14 @@ const ProfilePage = () => {
       uploadBytes(storageRef, file).then((snapshot) => {
         getDownloadURL(snapshot.ref).then((downloadURL) => {
           setPhotoURL(downloadURL);
-          updateProfile(user, { photoURL: downloadURL }).catch((error) => console.error(error));
+          updateProfile(user, { photoURL: downloadURL })
+            .then(() => {
+              setMessage('Profile photo updated successfully.');
+            })
+            .catch((error) => {
+              console.error(error);
+              setError('Error updating profile photo.');
+            });
         });
       });
     }
@@ -40,38 +49,60 @@ const ProfilePage = () => {
   const handleSaveChanges = () => {
     if (user) {
       const newDisplayName = displayName || `User${Math.floor(Math.random() * 10000)}`; // Random default username
-      updateProfile(user, {
-        displayName: newDisplayName,
-        // bio is not a standard property in Firebase, consider storing it in a database
-      }).then(() => {
-        console.log('Profile updated successfully');
-      }).catch((error) => {
-        console.error('Error updating profile:', error);
-      });
+      updateProfile(user, { displayName: newDisplayName })
+        .then(() => {
+          setMessage('Profile updated successfully.');
+        })
+        .catch((error) => {
+          console.error('Error updating profile:', error);
+          setError('Error updating profile.');
+        });
     }
   };
 
+  const handleLogout = () => {
+    signOut(auth)
+      .then(() => {
+        navigate('/'); // Redirect to auth page or login page after logout
+      })
+      .catch((error) => {
+        console.error('Error logging out:', error);
+        setError('Error logging out.');
+      });
+  };
+
+  const handleBackToHome = () => {
+    navigate('/products'); // Redirect to products page
+  };
+
   if (!user) {
-    return <div>Loading...</div>;
+    return <div>Please Log In to Continue...</div>;
   }
 
   return (
     <div className="profile-container">
       <h1>Profile Page</h1>
-      <div className="profile-photo">
-        <img src={photoURL} alt="Profile" />
-        <input type="file" onChange={handlePhotoChange} />
+      {message && <div className="success-message">{message}</div>}
+      {error && <div className="error-message">{error}</div>}
+      <div className="profile-header">
+        <div className="profile-photo">
+          <img src={photoURL} alt="Profile" />
+          <label className="photo-upload">
+            <input type="file" onChange={handlePhotoChange} />
+            <span>Change Photo</span>
+          </label>
+        </div>
+        <div className="profile-info">
+          <label>
+            Username:
+            <input type="text" value={displayName} onChange={(e) => setDisplayName(e.target.value)} />
+          </label>
+        </div>
       </div>
-      <div className="profile-details">
-        <label>
-          Username:
-          <input type="text" value={displayName} onChange={(e) => setDisplayName(e.target.value)} />
-        </label>
-        <label>
-          Bio:
-          <textarea value={bio} onChange={(e) => setBio(e.target.value)}></textarea>
-        </label>
+      <div className="profile-actions">
         <button onClick={handleSaveChanges}>Save Changes</button>
+        <button onClick={handleLogout} className="logout-button">Log Out</button>
+        <button onClick={handleBackToHome} className="home-button">Back to Home</button>
       </div>
     </div>
   );
