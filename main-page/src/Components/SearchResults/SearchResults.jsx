@@ -39,9 +39,6 @@ const SearchResults = ({ searchQuery }) => {
           }));
           productsArray = [...productsArray, ...productsArray2];
         }
-        
-        
-
         // Filter products based on keywords
         const keywords = searchQuery.toLowerCase().split(" "); // split keywords
         const filteredProducts = productsArray.filter((product) =>
