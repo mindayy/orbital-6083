@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { getAuth, updateProfile, signOut } from 'firebase/auth';
-import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from 'firebase/storage';
 import { useNavigate } from 'react-router-dom';
 import defaultProfilePic from '../Assets/defaultpfp.png';
+import pencilIcon from '../Assets/pencil-icon.svg'; 
 import './ProfilePage.css';
 
 const ProfilePage = () => {
@@ -19,7 +20,7 @@ const ProfilePage = () => {
     const unsubscribe = auth.onAuthStateChanged((currentUser) => {
       if (currentUser) {
         setUser(currentUser);
-        setDisplayName(currentUser.displayName || '');
+        setDisplayName(currentUser.displayName || `User${Math.floor(Math.random() * 10000)}`);
         setPhotoURL(currentUser.photoURL || defaultProfilePic);
       }
     });
@@ -46,6 +47,28 @@ const ProfilePage = () => {
     }
   };
 
+  const handleRemovePhoto = () => {
+    if (user) {
+      const storageRef = ref(storage, `profiles/${user.uid}`);
+      deleteObject(storageRef)
+        .then(() => {
+          setPhotoURL(defaultProfilePic);
+          updateProfile(user, { photoURL: null })
+            .then(() => {
+              setMessage('Profile photo removed successfully.');
+            })
+            .catch((error) => {
+              console.error(error);
+              setError('Error removing profile photo.');
+            });
+        })
+        .catch((error) => {
+          console.error(error);
+          setError('Error removing profile photo from storage.');
+        });
+    }
+  };
+
   const handleSaveChanges = () => {
     if (user) {
       const newDisplayName = displayName || `User${Math.floor(Math.random() * 10000)}`; // Random default username
@@ -63,7 +86,7 @@ const ProfilePage = () => {
   const handleLogout = () => {
     signOut(auth)
       .then(() => {
-        navigate('/'); // Redirect to auth page or login page after logout
+        navigate('/'); // Redirect to home after logging out
       })
       .catch((error) => {
         console.error('Error logging out:', error);
@@ -88,9 +111,10 @@ const ProfilePage = () => {
         <div className="profile-photo">
           <img src={photoURL} alt="Profile" />
           <label className="photo-upload">
+            <img src={pencilIcon} alt="Change Photo" />
             <input type="file" onChange={handlePhotoChange} />
-            <span>Change Photo</span>
           </label>
+          <button onClick={handleRemovePhoto}>Remove Photo</button>
         </div>
         <div className="profile-info">
           <label>

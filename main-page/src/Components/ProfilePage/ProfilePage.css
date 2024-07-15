@@ -51,17 +51,18 @@
 }
 
 .photo-upload {
-  position: absolute;
-  bottom: -20px; /* Adjust this value to position the text */
-  left: 50%;
-  transform: translateX(-50%);
-  background-color: #653c1f;
-  color: white;
-  padding: 5px 10px;
-  border-radius: 5px;
+  position: bottom;
+  bottom: 10px; 
+  right: 10px;
+  background-color: transparent;
+  border: none;
   cursor: pointer;
-  font-size: 0.9em;
-  z-index: 1;
+}
+
+.photo-upload img {
+  width: 25px;
+  height: 25px;
+  border-radius: 0;
 }
 
 .photo-upload input {
@@ -121,4 +122,19 @@
 
 button:hover {
   background-color: #ddd;
+}
+
+.remove-photo-button {
+  background-color: #d9d4f6;
+  color: #653c1f;
+  padding: 5px 10px;
+  font-size: 0.9em;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.remove-photo-button:hover {
+  background-color: #d32f2f;
 }
