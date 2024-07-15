@@ -54,7 +54,7 @@ const FilterBar = ({ applyFilters }) => {
       <div className="filter-section-categories">
         <h3>Categories</h3>
         <div className='category-options'>
-          {['Tops', 'Dresses', 'Outerwear', 'Pants', 'Shorts', 'Skirts', 'Others'].map((category) => (
+          {['Tops', 'Dresses', 'Outerwear', 'Pants', 'Shorts', 'Skirts', 'Onepiece', 'Others'].map((category) => (
             <label key={category}>
               <input
                 type="checkbox"
