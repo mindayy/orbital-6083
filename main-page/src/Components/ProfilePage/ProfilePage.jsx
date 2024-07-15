@@ -98,8 +98,18 @@ const ProfilePage = () => {
     navigate('/products'); // Redirect to products page
   };
 
+  const handleLogin = () => {
+    navigate('/auth'); // Redirect to login page
+  };
+
   if (!user) {
-    return <div>Please Log In to Continue...</div>;
+    return (
+      <div className="not-logged-in-container">
+        <p>Please Log In to Continue...</p>
+        <button onClick={handleLogin} className="login-button">Log In</button>
+        <button onClick={handleBackToHome} className="home-button">Back to Home</button>
+      </div>
+    );
   }
 
   return (
