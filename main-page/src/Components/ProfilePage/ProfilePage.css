@@ -51,17 +51,18 @@
 }
 
 .photo-upload {
-  position: absolute;
-  bottom: -20px; /* Adjust this value to position the text */
-  left: 50%;
-  transform: translateX(-50%);
-  background-color: #653c1f;
-  color: white;
-  padding: 5px 10px;
-  border-radius: 5px;
+  position: bottom;
+  bottom: 10px; 
+  right: 10px;
+  background-color: transparent;
+  border: none;
   cursor: pointer;
-  font-size: 0.9em;
-  z-index: 1;
+}
+
+.photo-upload img {
+  width: 25px;
+  height: 25px;
+  border-radius: 0;
 }
 
 .photo-upload input {
@@ -122,3 +123,64 @@
 button:hover {
   background-color: #ddd;
 }
+
+.remove-photo-button {
+  background-color: #E0B4FF;
+  color: #653c1f;
+  padding: 5px 10px;
+  font-size: 0.9em;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.remove-photo-button:hover {
+  background-color: #d32f2f;
+}
+
+.not-logged-in-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  font-family: Arial, sans-serif;
+}
+
+.not-logged-in-container p {
+  font-size: 1.5em;
+  color: #653c1f;
+  margin-bottom: 20px;
+}
+
+.not-logged-in-container .login-button,
+.not-logged-in-container .home-button {
+  padding: 10px 20px;
+  font-size: 1em;
+  margin: 5px;
+  cursor: pointer;
+  border: none;
+  border-radius: 5px;
+  color: white;
+}
+
+.not-logged-in-container .login-button {
+  background-color: #E0B4FF;
+}
+
+.not-logged-in-container .login-button:hover {
+  background-color: #4c4c4c;
+}
+
+.not-logged-in-container .home-button {
+  background-color: #653c1f;
+  ;
+}
+
+.not-logged-in-container .home-button:hover {
+  background-color: #4c4c4c;
+}
+
