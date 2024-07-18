@@ -6,6 +6,7 @@ import ProductData from '../Components/ProductData/ProductData';
 const Products = () => {
     const [filters, setFilters] = useState({
       categoryFilter: [],
+      colourFilter: [],
       sizeFilter: [],
       priceFilter: { type: '', range: { min: '', max: '' } },
     });

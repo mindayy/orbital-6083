@@ -1,70 +1,93 @@
 .filter-bar {
-    border-bottom: 1px solid #d4a776;
     padding: 25px;
-    padding-right: 100px;
     justify-content: space-between;
     align-items: center;
     display: flex;
-    flex-direction: row;
-    padding-bottom: 50px;
+    flex-direction: column;
+    padding-bottom: 10px;
+    position: relative;
+    max-width: 100%;
+    box-shadow: 0 1px 3px -2px #70503F;
 }
 
-.filter-section-categories,
-.filter-section-size,
-.filter-section-price {
+.filter-section {
     display: flex;
     flex-direction: column;
+    flex: 1;
     align-items: flex-start;
-  
+    margin-right: 60px;
+    align-items: center;
 }
 
-.filter-bar h3 {
+.filter-section-row {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.filter-section h3 {
     color: #70503F;
-    margin-bottom: 10px;
     font-size: 18px;
     font-weight: 600;
-    padding: 20px;
+    margin-bottom: 10px
 }
 
-.filter-section-categories .category-options,
-.filter-section-size .size-options{
-    display: grid;
-    grid-template-columns: repeat(3, 1fr); 
-    gap: 10px; 
+.underline {
+    content: '';
+    height: 3px; 
+    width: 60px;
+    height: 2px;
+    background-color: #E0B4FF; 
+    margin-bottom: 30px;
 }
 
-.filter-section-price .price-options{
+.filter-section .filter-options {
+    gap: 5px; 
+    margin-top: 10px;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    flex-wrap: wrap;
 }
 
+.filter-section .filter-options-colour {
+    gap: 5px; 
+    margin-top: 10px;
+    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); 
+}
 
-.filter-section-categories .category-options label,
-.filter-section-size .size-options label,
-.filter-section-price .price-options label {
+.filter-section .filter-options label,
+.filter-section .filter-options-colour label {
     color: #70503F;
     font-size: 14px;
-    display: flex;
     align-items: center;
     margin-right: 10px;
     margin-bottom: 5px;
+    display: inline-flex;
 }
 
-.filter-section-price input[type="number"] {
+.filter-section .color-box {
+    width: 15px; 
+    height: 5px; 
+    margin-left: 5px; 
+    display: inline-block;
+}
+
+.filter-section input[type="number"] {
     width: 60px;
     padding: 5px;
     margin: 5px;
     border: 1px solid #70503F;
 }
 
-.filter-section-price div input {
+.filter-section div input {
     margin-left: 5px;
     margin-right: 5px;
     color: #70503F;
 }
 
-.filter-section-price div input::placeholder {
+.filter-section div input::placeholder {
     color: #b5a9a4;
     font-size: 14px;
 }
@@ -87,17 +110,17 @@ input[type='radio']{
     background: #70503F;
   }
 
-  input[type='checkbox']:checked::after {
+input[type='checkbox']:checked::after {
     content: '\2713'; 
     font-size: 20px;
     color: white; 
     position: absolute;
-    top: 0.5px; /* Adjust position as needed */
-    left: 4px;
-  }
-.filter-section-categories input[type="checkbox"],
-.filter-section-size input[type="checkbox"],
-.filter-section-price input[type="radio"] {
+    top: 0px; 
+    left: 10px;
+}
+
+.filter-section input[type="checkbox"],
+.filter-section input[type="radio"] {
     margin-right: 10px;
     padding: 10px
 }
@@ -105,12 +128,14 @@ input[type='radio']{
 .apply-button-container {
     display: flex;
     align-self: flex-end;
-    bottom: 100px;
-    right: 150px;
-  }
+    margin-top: 20px;
+    gap: 20px;
+    padding: 0px 60px;
+    margin-bottom: 10px;
+}
   
 .apply-button-container button {
-    padding: 8px 16px; /* adjust as necessary for button size */
+    padding: 8px 16px; 
     font-size: 14px;
     font-weight: bold;
     border-radius: 0;
@@ -119,4 +144,14 @@ input[type='radio']{
 
 .apply-button-container button:hover {
     background-color: #E0B4FF;
+}
+
+.filter-bar .dropdown-button {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+    color: #70503F;
+    width: auto;
+    font-weight: bold;
+    margin-bottom: 20px
 }

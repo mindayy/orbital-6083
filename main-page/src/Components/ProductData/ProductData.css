@@ -3,7 +3,11 @@
     margin: 0 auto;
     padding: 20px;
 }
-  
+ 
+.product-data-container p {
+    color: #70503F;
+}
+
 .product-data-container h2 {
     color: #70503F;
     text-align: left;
@@ -104,5 +108,7 @@
  
 }
 
- 
+ .loading-text {
+    color: #70503F;
+ }
 

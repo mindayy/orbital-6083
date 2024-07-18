@@ -35,7 +35,7 @@ const ProductData = ({ filters }) => {
   }, [filters, setFilters]);
 
   if (loading) {
-    return <p>Loading...</p>;
+    return <p className="loading-text">Loading...</p>;
   }
 
   return (
