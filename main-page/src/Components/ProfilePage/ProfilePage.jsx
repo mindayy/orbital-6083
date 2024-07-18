@@ -1,20 +1,26 @@
-import React, { useState, useEffect } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { getAuth, updateProfile, signOut } from 'firebase/auth';
 import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from 'firebase/storage';
 import { useNavigate } from 'react-router-dom';
+import { WishlistContext } from '../WishlistContext/WishlistContext';
 import defaultProfilePic from '../Assets/defaultpfp.png';
 import pencilIcon from '../Assets/pencil-icon.svg'; 
+import hollowHeartIcon from '../Assets/likes.png';
+import filledHeartIcon from '../Assets/filledheart.png';
 import './ProfilePage.css';
 
 const ProfilePage = () => {
   const auth = getAuth();
   const storage = getStorage();
   const navigate = useNavigate();
+  const { wishlist, addToWishlist, removeFromWishlist, isProductInWishlist } = useContext(WishlistContext);
+
   const [user, setUser] = useState(null);
   const [displayName, setDisplayName] = useState('');
   const [photoURL, setPhotoURL] = useState('');
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
+  
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((currentUser) => {
@@ -137,6 +143,28 @@ const ProfilePage = () => {
         <button onClick={handleSaveChanges}>Save Changes</button>
         <button onClick={handleLogout} className="logout-button">Log Out</button>
         <button onClick={handleBackToHome} className="home-button">Back to Home</button>
+      </div>
+      <div className="wishlist-container">
+        <h2>Wishlist</h2>
+        {wishlist.length > 0 ? (
+          wishlist.map((product) => (
+            <div key={product.id} className="wishlist-item">
+              <img src={product.imageUrl} alt={product.title} />
+              <div className="wishlist-info">
+                <h4>{product.title}</h4>
+                <p>${product.price}0</p>
+                <button 
+                  className="wishlist-button" 
+                  onClick={() => isProductInWishlist(product.id) ? removeFromWishlist(product.id) : addToWishlist(product)}
+                >
+                  <img src={isProductInWishlist(product.id) ? filledHeartIcon : hollowHeartIcon} alt="Wishlist" />
+                </button>
+              </div>
+            </div>
+          ))
+        ) : (
+          <p>No items in wishlist.</p>
+        )}
       </div>
     </div>
   );
