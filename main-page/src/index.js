@@ -8,7 +8,9 @@ import { WishlistProvider } from './Components/WishlistContext/WishlistContext';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+    <WishlistProvider>
+      <App />
+    </WishlistProvider>
   </React.StrictMode>
 );
 
