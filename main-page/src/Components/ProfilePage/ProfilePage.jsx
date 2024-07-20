@@ -21,7 +21,6 @@ const ProfilePage = () => {
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
   
-
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((currentUser) => {
       if (currentUser) {
@@ -108,6 +107,14 @@ const ProfilePage = () => {
     navigate('/auth'); // Redirect to login page
   };
 
+  const handleHeartClick = (product) => {
+    if (isProductInWishlist(product.id)) {
+      removeFromWishlist(product.id);
+    } else {
+      addToWishlist(product);
+    }
+  };
+
   if (!user) {
     return (
       <div className="not-logged-in-container">
@@ -125,7 +132,7 @@ const ProfilePage = () => {
       {error && <div className="error-message">{error}</div>}
       <div className="profile-header">
         <div className="profile-photo">
-          <img src={photoURL} alt="Profile" />
+          <img src={photoURL} alt="User Profile" />
           <label className="photo-upload">
             <img src={pencilIcon} alt="Change Photo" />
             <input type="file" onChange={handlePhotoChange} />
@@ -145,26 +152,23 @@ const ProfilePage = () => {
         <button onClick={handleBackToHome} className="home-button">Back to Home</button>
       </div>
       <div className="wishlist-container">
-        <h2>Wishlist</h2>
-        {wishlist.length > 0 ? (
-          wishlist.map((product) => (
-            <div key={product.id} className="wishlist-item">
+        <h2>Your Wishlist</h2>
+        <ul>
+          {wishlist.map((product) => (
+            <li key={product.id}>
               <img src={product.imageUrl} alt={product.title} />
-              <div className="wishlist-info">
-                <h4>{product.title}</h4>
-                <p>${product.price}0</p>
-                <button 
-                  className="wishlist-button" 
-                  onClick={() => isProductInWishlist(product.id) ? removeFromWishlist(product.id) : addToWishlist(product)}
-                >
-                  <img src={isProductInWishlist(product.id) ? filledHeartIcon : hollowHeartIcon} alt="Wishlist" />
-                </button>
-              </div>
-            </div>
-          ))
-        ) : (
-          <p>No items in wishlist.</p>
-        )}
+              <h3>
+                <a href={product.productUrl} target="_blank" rel="noopener noreferrer">{product.title}</a>
+              </h3>
+              <button 
+                className="wishlist-button" 
+                onClick={() => handleHeartClick(product)}
+              >
+                <img src={isProductInWishlist(product.id) ? filledHeartIcon : hollowHeartIcon} alt="Wishlist" />
+              </button>
+            </li>
+          ))}
+        </ul>
       </div>
     </div>
   );

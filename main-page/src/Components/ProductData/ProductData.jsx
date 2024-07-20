@@ -1,13 +1,11 @@
+import React, { useContext, useEffect, useState } from 'react';
 import { database } from "../firebaseConfig/index";
 import { ref, get } from 'firebase/database';
-// import React, { useEffect, useState } from 'react';
-import React, { useContext, useEffect, useState, useCallback } from 'react';
 import useFilter from "../hooks/useFilter";
 import { WishlistContext } from '../WishlistContext/WishlistContext';
 import hollowHeartIcon from '../Assets/likes.png';
 import filledHeartIcon from '../Assets/filledheart.png';
 import './ProductData.css';
-
 
 const ProductData = ({ filters }) => {
   const [products, setProducts] = useState([]);
@@ -15,10 +13,6 @@ const ProductData = ({ filters }) => {
   const { setFilters, filteredProducts } = useFilter(products);
   const { addToWishlist, removeFromWishlist, isProductInWishlist } = useContext(WishlistContext);
 
-//const ProductData = ({ filters = { categoryFilter: [], sizeFilter: [], priceFilter: { type: '', range: { min: 0, max: 0 } } } }) => {
-  //const [products, setProducts] = useState([]);
-  //const [loading, setLoading] = useState(true);
-  
   useEffect(() => {
     const fetchProducts = async () => {
       try {
@@ -40,7 +34,7 @@ const ProductData = ({ filters }) => {
   }, []);
 
   useEffect(() => {
-    setFilters(filters); 
+    setFilters(filters);
   }, [filters, setFilters]);
 
   const handleHeartClick = (product) => {
@@ -50,7 +44,7 @@ const ProductData = ({ filters }) => {
       addToWishlist(product);
     }
   };
-  
+
   if (loading) {
     return <p className="loading-text">Loading...</p>;
   }
@@ -77,11 +71,15 @@ const ProductData = ({ filters }) => {
                 )}
               </div>
               <div className="product-info">
-                <h4><a href={product.productUrl} target="_blank" rel="noopener noreferrer">{product.title}</a></h4>
+                <h4>
+                  <a href={product.productUrl} target="_blank" rel="noopener noreferrer">
+                    {product.title}
+                  </a>
+                </h4>
                 <p>${product.price}0</p>
                 <button 
                   className="wishlist-button" 
-                  onClick={() => isProductInWishlist(product.id) ? removeFromWishlist(product.id) : addToWishlist(product)}
+                  onClick={() => handleHeartClick(product)}
                 >
                   <img src={isProductInWishlist(product.id) ? filledHeartIcon : hollowHeartIcon} alt="Wishlist" />
                 </button>
@@ -97,4 +95,3 @@ const ProductData = ({ filters }) => {
 };
 
 export default ProductData;
-
