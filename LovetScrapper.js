@@ -1,4 +1,5 @@
 const puppeteer = require('puppeteer');
+const { v4: uuidv4 } = require('uuid');
 const admin = require('firebase-admin');
 const serviceAccount = require('/Users/min/Downloads/orbital-6083-firebase-adminsdk-qj4zv-6073a3dcf0.json');
 
@@ -71,6 +72,9 @@ const scrapeData = async () => {
 
     // Close the browser when done
     await browser.close();
+    
+    // Add unique IDs to each product
+    results = results.map(product => ({ ...product, id: uuidv4() }));
 
     // Output the results
     console.log(results);
