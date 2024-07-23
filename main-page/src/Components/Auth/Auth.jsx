@@ -2,9 +2,11 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { auth } from '../firebaseConfig';
+import { useUser } from '../UserContext/UserContext'; // Correct import path
 import './Auth.css';
 
 const Auth = () => {
+  const { login } = useUser(); // Destructure login from useUser
   const [isSignUp, setIsSignUp] = useState(true);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -25,7 +27,6 @@ const Auth = () => {
     e.preventDefault();
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
-        // Signed in 
         setMessage("Successfully Registered");
         setTimeout(() => {
           setIsSignUp(false);
@@ -42,9 +43,8 @@ const Auth = () => {
     e.preventDefault();
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
-        // Signed in 
         setMessage("Successfully Signed In");
-        // Redirect to profile page to complete profile set up 
+        login(userCredential.user.email); // Call login function
         navigate("/profile");
       })
       .catch((error) => {
@@ -56,17 +56,11 @@ const Auth = () => {
     const provider = new GoogleAuthProvider();
     signInWithPopup(auth, provider)
       .then((result) => {
-        const credential = GoogleAuthProvider.credentialFromResult(result);
-        const token = credential.accessToken;
         const user = result.user;
-        console.log('User signed in with Google:', user);
-        navigate("/profile"); // redirect to profile page
+        login(user.email); // Call login function
+        navigate("/profile");
       }).catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        const email = error.email;
-        const credential = GoogleAuthProvider.credentialFromError(error);
-        console.error('Error signing in with Google:', errorMessage);
+        setError("Error signing in with Google: " + error.message);
       });
   };
 

@@ -1,17 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'; // Import useState
 import { Link, useNavigate } from 'react-router-dom';
-import'./Navbar.css';
+import { useWishlist } from '../WishlistContext/WishlistContext';
+import { useUser } from '../UserContext/UserContext'; // Correct import path
+import './Navbar.css';
 
 import logo from '../Assets/logo.png';
 import search from '../Assets/search.png';
 import profile from '../Assets/profile.png';
 import likes from '../Assets/likes.png';
 
-
 const Navbar = () => {
-    const [searchQuery, setSearchQuery] = useState('');
+    const { user } = useUser(); // Destructure user from useUser
+    const { wishlist } = useWishlist();
+    const [searchQuery, setSearchQuery] = useState(''); // Define useState
     const navigate = useNavigate();
-    
+
     const handleSearchChange = (event) => {
         setSearchQuery(event.target.value);
     };
@@ -21,6 +24,10 @@ const Navbar = () => {
         if (searchQuery.trim() !== '') {
             navigate(`/search?query=${encodeURIComponent(searchQuery)}`);
         }
+    };
+
+    const getWishlistCount = () => {
+        return wishlist.length;
     };
 
     return (
@@ -47,13 +54,18 @@ const Navbar = () => {
                 <Link to="/profile">
                     <img src={profile} alt='Profile' />
                 </Link>
-                <button onClick={() => navigate('/auth')}>Sign Up | Login</button>
-                <img src={likes} alt='Likes' />
+                {user ? (
+                    <span>{user.username}</span>
+                ) : (
+                    <button onClick={() => navigate('/auth')}>Sign Up | Login</button>
+                )}
+                <Link to="/profile">
+                    <img src={likes} alt='Likes' />
+                </Link>
             </div>
-            <div className='nav-likes-count'>0</div>
-
+            <div className='nav-likes-count'>{getWishlistCount()}</div>
         </div>
     );
-}
+};
 
-export default Navbar
+export default Navbar;
