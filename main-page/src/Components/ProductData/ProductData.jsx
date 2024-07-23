@@ -1,4 +1,6 @@
-import React, { useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { WishlistContext } from '../WishlistContext/WishlistContext';
 import hollowHeartIcon from '../Assets/likes.png';
 import filledHeartIcon from '../Assets/filledheart.png';
@@ -6,8 +8,24 @@ import './ProductData.css';
 
 const ProductData = ({ products }) => {
   const { addToWishlist, removeFromWishlist, isProductInWishlist } = useContext(WishlistContext);
+  const [user, setUser] = useState(null);
+  const navigate = useNavigate();
+  const auth = getAuth();
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+    });
+
+    return () => unsubscribe();
+  }, [auth]);
 
   const handleHeartClick = (product) => {
+    if (!user) {
+      alert('You need to be logged in to add items to your wishlist.');
+      navigate('/auth');
+      return;
+    }
     if (isProductInWishlist(product.id)) {
       removeFromWishlist(product.id);
     } else {
@@ -15,17 +33,16 @@ const ProductData = ({ products }) => {
     }
   };
 
-  // method to capitalise first letter of each word (product title)
   const capitaliseFirstLetter = (text) => {
     return text
-    .split(' ')
-    .map(word => {
-      if (word.startsWith('(')) {
-        return '(' + word.charAt(1).toUpperCase() + word.slice(2).toLowerCase(); 
-      }
-      return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
-    })
-    .join(' ');
+      .split(' ')
+      .map(word => {
+        if (word.startsWith('(')) {
+          return '(' + word.charAt(1).toUpperCase() + word.slice(2).toLowerCase(); 
+        }
+        return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+      })
+      .join(' ');
   };
 
   return (
@@ -55,7 +72,7 @@ const ProductData = ({ products }) => {
                     {capitaliseFirstLetter(product.title)}
                   </a>
                 </h4>
-                <p>${product.price}0</p>
+                <p>${product.price.toFixed(2)}</p>
                 <button 
                   className="wishlist-button" 
                   onClick={() => handleHeartClick(product)}

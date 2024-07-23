@@ -15,7 +15,12 @@ export const WishlistProvider = ({ children }) => {
   }, [wishlist]);
 
   const addToWishlist = useCallback((product) => {
-    setWishlist((prevWishlist) => [...prevWishlist, product]);
+    setWishlist((prevWishlist) => {
+      if (!prevWishlist.some(item => item.id === product.id)) {
+        return [...prevWishlist, product];
+      }
+      return prevWishlist;
+    });
   }, []);
 
   const removeFromWishlist = useCallback((productId) => {
@@ -32,4 +37,3 @@ export const WishlistProvider = ({ children }) => {
     </WishlistContext.Provider>
   );
 };
-

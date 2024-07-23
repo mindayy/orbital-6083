@@ -58,7 +58,7 @@ const ProfilePage = () => {
       deleteObject(storageRef)
         .then(() => {
           setPhotoURL(defaultProfilePic);
-          updateProfile(user, { photoURL: null })
+          updateProfile(user, { photoURL: defaultProfilePic }) // Update with default profile picture
             .then(() => {
               setMessage('Profile photo removed successfully.');
             })
@@ -152,20 +152,24 @@ const ProfilePage = () => {
         <button onClick={handleBackToHome} className="home-button">Back to Home</button>
       </div>
       <div className="wishlist-container">
-        <h2>Your Wishlist</h2>
+        <h2>Wishlist</h2>
         <ul>
           {wishlist.map((product) => (
-            <li key={product.id}>
-              <img src={product.imageUrl} alt={product.title} />
-              <h3>
-                <a href={product.productUrl} target="_blank" rel="noopener noreferrer">{product.title}</a>
-              </h3>
-              <button 
-                className="wishlist-button" 
-                onClick={() => handleHeartClick(product)}
-              >
-                <img src={isProductInWishlist(product.id) ? filledHeartIcon : hollowHeartIcon} alt="Wishlist" />
-              </button>
+            <li key={product.id} className="wishlist-item">
+              <div className="wishlist-item-content">
+                <img src={product.imageUrl} alt={product.title} className="wishlist-item-image" />
+                <div className="wishlist-item-info">
+                  <h3>
+                    <a href={product.productUrl} target="_blank" rel="noopener noreferrer">{product.title}</a>
+                  </h3>
+                  <button 
+                    className="wishlist-button" 
+                    onClick={() => handleHeartClick(product)}
+                  >
+                    <img src={isProductInWishlist(product.id) ? filledHeartIcon : hollowHeartIcon} alt="Wishlist" />
+                  </button>
+                </div>
+              </div>
             </li>
           ))}
         </ul>

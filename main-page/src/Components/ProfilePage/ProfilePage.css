@@ -1,5 +1,5 @@
 .profile-container {
-  max-width: 800px;
+  max-width: 1200px;
   margin: 0 auto;
   padding: 20px;
   background-color: #fff;
@@ -83,6 +83,7 @@
 
 .profile-info input[type="text"] {
   width: 100%;
+  max-width: 800px;
   padding: 10px;
   font-size: 1em;
   border: 1px solid #ddd;
@@ -95,6 +96,7 @@
 
 .profile-actions button {
   padding: 10px 20px;
+  max-width: 200px;
   font-size: 1em;
   margin: 5px;
   cursor: pointer;
@@ -184,50 +186,65 @@ button:hover {
   background-color: #4c4c4c;
 }
 
+/* Wishlist section */
 .wishlist-container {
-  margin-top: 20px;
+  padding: 20px;
+  background-color: #E0B4FF;
+  border-radius: 10px;
+}
+
+.wishlist-container h2 {
+  margin-bottom: 20px;
+  color: #70503F;
+  font-size: 24px;
 }
 
 .wishlist-item {
   display: flex;
   align-items: center;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
+  background-color: #ffffff;
+  border: 1px solid #ddd;
   padding: 10px;
-  background-color: #f9f9f9;
-  border-radius: 5px;
+  border-radius: 10px;
 }
 
-.wishlist-item img {
-  width: 10px;
-  height: 10px;
-  margin-right: 10px;
+.wishlist-item-content {
+  display: flex;
+  align-items: center;
 }
 
-.wishlist-info {
+.wishlist-item-image {
+  width: 100px; /* Adjust as needed */
+  height: 100px; /* Adjust as needed */
+  border-radius: 10px;
+  margin-right: 20px;
+}
+
+.wishlist-item-info {
   flex: 1;
 }
 
-.wishlist-info h4 {
+.wishlist-item-info h3 {
+  font-size: 18px;
   margin: 0;
-  font-size: 1em;
-  color: #653c1f;
+  margin-bottom: 5px;
+  color: #333;
 }
 
-.wishlist-info p {
-  margin: 0;
-  font-size: 0.9em;
-  color: #333;
+.wishlist-item-info a {
+  text-decoration: none;
+  color: #b45ab0; /* Adjust color to match your theme */
 }
 
 .wishlist-button {
   background: none;
   border: none;
   cursor: pointer;
+  margin-left: 20px;
 }
 
 .wishlist-button img {
-  width: 24px;
-  height: 24px;
+  width: 24px; /* Adjust as needed */
+  height: 24px; /* Adjust as needed */
 }
-
-
