@@ -1,41 +1,11 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { database } from "../firebaseConfig/index";
-import { ref, get } from 'firebase/database';
-import useFilter from "../hooks/useFilter";
+import React, { useContext } from 'react';
 import { WishlistContext } from '../WishlistContext/WishlistContext';
 import hollowHeartIcon from '../Assets/likes.png';
 import filledHeartIcon from '../Assets/filledheart.png';
 import './ProductData.css';
 
-const ProductData = ({ filters }) => {
-  const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const { setFilters, filteredProducts } = useFilter(products);
+const ProductData = ({ products }) => {
   const { addToWishlist, removeFromWishlist, isProductInWishlist } = useContext(WishlistContext);
-
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const ssdSnapshot = await get(ref(database, '/SSD-products'));
-        const lovetSnapshot = await get(ref(database, '/lovet-products'));
-
-        const ssdProducts = ssdSnapshot.exists() ? Object.values(ssdSnapshot.val()) : [];
-        const lovetProducts = lovetSnapshot.exists() ? Object.values(lovetSnapshot.val()) : [];
-
-        setProducts([...ssdProducts, ...lovetProducts]);
-      } catch (error) {
-        console.error("Error fetching products:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchProducts();
-  }, []);
-
-  useEffect(() => {
-    setFilters(filters);
-  }, [filters, setFilters]);
 
   const handleHeartClick = (product) => {
     if (isProductInWishlist(product.id)) {
@@ -45,15 +15,12 @@ const ProductData = ({ filters }) => {
     }
   };
 
-  if (loading) {
-    return <p className="loading-text">Loading...</p>;
-  }
 
   return (
     <div className="product-data-container">
-      {filteredProducts.length > 0 ? (
+      {products.length > 0 ? (
         <div className="products-list">
-          {filteredProducts.map((product) => (
+          {products.map((product) => (
             <div key={product.id} className="product-item">
               <h3>{product.shop}</h3>
               <img src={product.imageUrl} alt={product.title} />
