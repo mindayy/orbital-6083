@@ -15,7 +15,6 @@ const ProductData = ({ products }) => {
     }
   };
 
-
   return (
     <div className="product-data-container">
       {products.length > 0 ? (

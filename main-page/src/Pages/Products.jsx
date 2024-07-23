@@ -16,7 +16,7 @@ const Products = () => {
     priceFilter: { type: '', range: { min: '', max: '' } },
   });
   const [currentPage, setCurrentPage] = useState(1);
-  const [productsPerPage] = useState(24); // number of products per page
+  const [productsPerPage] = useState(12); // number of products per page
   const { filteredProducts, setFilters: setFilterState } = useFilter(products);
 
   useEffect(() => {
@@ -42,10 +42,16 @@ const Products = () => {
     setCurrentPage(1); // reset to the first page whenever filters are applied
   }, [filters, setFilterState]);
 
-  // Get current products
+  // get current products
   const indexOfLastProduct = currentPage * productsPerPage;
   const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
   const currentProducts = filteredProducts.slice(indexOfFirstProduct, indexOfFirstProduct + productsPerPage);
+
+  // handle page change & scroll to the top
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
   return (
     <div className="products-page">
@@ -53,10 +59,10 @@ const Products = () => {
       <FilterBar applyFilters={setFilters} />
       <ProductData products={currentProducts} />
       <Pagination 
-        productsPerPage={productsPerPage} 
-        totalProducts={filteredProducts.length} 
-        paginate={setCurrentPage} 
-        currentPage={currentPage} 
+        currentPage={currentPage}
+        productsPerPage={productsPerPage}
+        totalProducts={filteredProducts.length}
+        onPageChange={handlePageChange}
       />
     </div>
   );

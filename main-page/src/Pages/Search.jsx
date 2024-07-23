@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import Navbar from '../Components/Navbar/Navbar';
-import FilterBar from '../Components/FilterBar/FilterBar';
 import SearchResults from '../Components/SearchResults/SearchResults';
 
 const Search = () => {
@@ -21,7 +20,6 @@ const Search = () => {
     return (
       <div>
         <Navbar/>
-        <FilterBar/>
         <SearchResults searchQuery={searchQuery} filters={filters} />
       </div>
     );

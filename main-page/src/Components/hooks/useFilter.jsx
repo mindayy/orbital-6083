@@ -64,7 +64,7 @@ const useFilter = (products) => {
     return 'Patterned';
   };
 
-  // filter by categories, sizes and price
+  // filter by categories, sizes, colours and price
   const applyFilters = useCallback(() => {
     return products.filter(product => {
       const productCategory = getCategory(product.title);
