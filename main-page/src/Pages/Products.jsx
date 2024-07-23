@@ -10,13 +10,14 @@ import { ref, get } from 'firebase/database';
 const Products = () => {
   const [products, setProducts] = useState([]);
   const [filters, setFilters] = useState({
+    blogshopFilter: [],
     categoryFilter: [],
     colourFilter: [],
     sizeFilter: [],
     priceFilter: { type: '', range: { min: '', max: '' } },
   });
   const [currentPage, setCurrentPage] = useState(1);
-  const [productsPerPage] = useState(12); // number of products per page
+  const [productsPerPage] = useState(24); // number of products per page
   const { filteredProducts, setFilters: setFilterState } = useFilter(products);
 
   useEffect(() => {

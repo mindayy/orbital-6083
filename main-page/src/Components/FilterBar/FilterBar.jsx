@@ -2,11 +2,22 @@ import React, { useState } from 'react';
 import './FilterBar.css';
 
 const FilterBar = ({ applyFilters }) => {
+  const [blogshopFilter, setBlogshopFilter] = useState([]);
   const [categoryFilter, setCategoryFilter] = useState([]);
   const [colourFilter, setColourFilter] = useState([]);
   const [sizeFilter, setSizeFilter] = useState([]);
   const [priceFilter, setPriceFilter] = useState({ type: '', range: { min: '', max: '' } });
   const [isDropdown, setIsDropdown] = useState(false);
+
+  const handleBlogshopChange = (blogshop) => {
+    setBlogshopFilter((prev) => {
+      if (prev.includes(blogshop)) {
+        return prev.filter((item) => item !== blogshop);
+      } else {
+        return [...prev, blogshop];
+      }
+    });
+  };
 
   const handleCategoryChange = (category) => {
     setCategoryFilter((prev) => {
@@ -57,7 +68,7 @@ const FilterBar = ({ applyFilters }) => {
   };
 
   const handleApplyFilters = () => {
-    applyFilters({ categoryFilter, sizeFilter, colourFilter,priceFilter });
+    applyFilters({ blogshopFilter, categoryFilter, sizeFilter, colourFilter, priceFilter });
     setIsDropdown(false); // close dropdown after applying
   };
 
@@ -66,6 +77,7 @@ const FilterBar = ({ applyFilters }) => {
   };
 
   const clearFilters = () => {
+    setBlogshopFilter([]);
     setCategoryFilter([]);
     setSizeFilter([]);
     setColourFilter([]);
@@ -83,6 +95,25 @@ const FilterBar = ({ applyFilters }) => {
       {isDropdown && (
         <div className="filter-options">
           <div className='filter-section-row'>
+            {/* Blogshops Filter */}
+            <div className="filter-section">
+              <h3>Blogshop</h3>
+              <div className='underline'></div>
+              <div className='filter-options'>
+                {['Lovet', 'SSD'].map((blogshop) => (
+                  <label key={blogshop}>
+                    <input
+                      type="checkbox"
+                      value={blogshop}
+                      checked={blogshopFilter.includes(blogshop)}
+                      onChange={() => handleBlogshopChange(blogshop)}
+                    />
+                    {blogshop}
+                  </label>
+                ))}
+              </div>
+            </div>
+
             {/* Categories Filter */}
             <div className="filter-section">
               <h3>Category</h3>

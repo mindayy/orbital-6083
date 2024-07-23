@@ -2,6 +2,7 @@ import { useState, useMemo, useCallback } from 'react';
 
 const useFilter = (products) => {
   const [filters, setFilters] = useState({
+    blogshopFilter: [],
     categoryFilter: [],
     colourFilter: [],
     sizeFilter: [],
@@ -32,6 +33,9 @@ const useFilter = (products) => {
   // sort items into colours based on keywords
   const getColour = (title) => {
     const keywords = {
+      Pink: ['pink', 'peach', 'rose', 'sakura', 'parfait', 'blush', 'cranberry', 'raspberry'],
+      Blue: ['blue', 'navy', 'tiffany', 'denim', 'wash', 'periwinkle', 'sky', 'arctic', 'marine', 'teal',
+        'midnight', 'cobalt', 'eclipse'],
       Beige: ['beige', 'natural', 'sand', 'cream', 'mauve', 'almond', 'latte',
        'oat', 'taupe', 'biscott', 'crème', 'oatmeal', 'sandalwood', 'bone', 'vanilla',
         'khaki', 'ecru', 'sepia', 'cornsilk', 'champagne', 'dune', 'tapioca', 'porcelain',
@@ -47,13 +51,10 @@ const useFilter = (products) => {
         'carrot'],
       Yellow: ['yellow', 'buttercup', 'sunrise', 'buttermilk', 'sunshine', 'honey', 'dandelion',
          'eggshell', 'daffodil', 'lemon', 'flaxseed'],
-      Blue: ['blue', 'navy', 'tiffany', 'denim', 'wash', 'periwinkle', 'sky', 'arctic', 'marine', 'teal',
-        'midnight', 'cobalt', 'eclipse'],
       Green: ['green', 'army', 'emerald', 'forest', 'olive', 'sage', 'seafoam', 'avocado', 'lime', 'mint',
         'pine', 'cactus', 'nature', 'pistachio', 'botanic', 'moss', 'foliage'],
       Purple: ['purple', 'lavendar', 'lavender', 'taro', 'lilac', 'eggplant', 'puce', 'thistle',
-        'wisteria', 'grape'],
-      Pink: ['pink', 'peach', 'rose', 'sakura', 'parfait', 'blush', 'cranberry', 'raspberry']
+        'wisteria', 'grape']
     };
 
     for (const [colour, keywordList] of Object.entries(keywords)) {
@@ -64,11 +65,12 @@ const useFilter = (products) => {
     return 'Patterned';
   };
 
-  // filter by categories, sizes, colours and price
+  // filter by blogshops, categories, sizes, colours and price
   const applyFilters = useCallback(() => {
     return products.filter(product => {
       const productCategory = getCategory(product.title);
       const productColour = getColour(product.title);
+      const matchBlogshop = !filters.blogshopFilter || !filters.blogshopFilter.length || filters.blogshopFilter.includes(product.shop);
       const matchCategory = !filters.categoryFilter.length || filters.categoryFilter.includes(productCategory);
       const matchColour = !filters.colourFilter.length || filters.colourFilter.includes(productColour);
       const matchSize = !filters.sizeFilter.length || (product.sizesList && filters.sizeFilter.some(size => product.sizesList.includes(size)));
@@ -77,7 +79,7 @@ const useFilter = (products) => {
         || (filters.priceFilter.type === 'high-to-low' && product.price)
         || (filters.priceFilter.type === 'range' && product.price >= filters.priceFilter.range.min && product.price <= filters.priceFilter.range.max);
 
-      return matchCategory && matchSize && matchColour && matchPrice;
+      return matchBlogshop && matchCategory && matchSize && matchColour && matchPrice;
     }).sort((a, b) => {
       if (filters.priceFilter.type === 'low-to-high') {
         return a.price - b.price;

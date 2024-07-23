@@ -15,6 +15,19 @@ const ProductData = ({ products }) => {
     }
   };
 
+  // method to capitalise first letter of each word (product title)
+  const capitaliseFirstLetter = (text) => {
+    return text
+    .split(' ')
+    .map(word => {
+      if (word.startsWith('(')) {
+        return '(' + word.charAt(1).toUpperCase() + word.slice(2).toLowerCase(); 
+      }
+      return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+    })
+    .join(' ');
+  };
+
   return (
     <div className="product-data-container">
       {products.length > 0 ? (
@@ -39,7 +52,7 @@ const ProductData = ({ products }) => {
               <div className="product-info">
                 <h4>
                   <a href={product.productUrl} target="_blank" rel="noopener noreferrer">
-                    {product.title}
+                    {capitaliseFirstLetter(product.title)}
                   </a>
                 </h4>
                 <p>${product.price}0</p>
