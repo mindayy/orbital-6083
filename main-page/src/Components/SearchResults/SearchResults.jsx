@@ -17,10 +17,12 @@ const SearchResults = ({ searchQuery }) => {
         const productsRef1 = ref(database, '/SSD-products');
         const productsRef2 = ref(database, '/lovet-products');
         const productsRef3 = ref(database, '/TTR-products')
+        const productsRef4 = ref(database, '/TTT-products')
 
         const snapshot1 = await get(productsRef1);
         const snapshot2 = await get(productsRef2);
         const snapshot3 = await get(productsRef3);
+        const snapshot4 = await get(productsRef4);
 
         let productsArray = [];
 
@@ -50,6 +52,16 @@ const SearchResults = ({ searchQuery }) => {
           }));
           productsArray = [...productsArray, ...productsArray3];
         }
+
+        if (snapshot4.exists()) {
+          const productsData4 = snapshot4.val();
+          const productsArray4 = Object.keys(productsData4).map((key) => ({
+            id: key,
+            ...productsData4[key],
+          }));
+          productsArray = [...productsArray, ...productsArray4];
+        }
+
         // Filter products based on keywords
         const keywords = searchQuery.toLowerCase().split(" "); // split keywords
         const filteredProducts = productsArray.filter((product) =>
