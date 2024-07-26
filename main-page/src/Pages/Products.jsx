@@ -25,11 +25,13 @@ const Products = () => {
       try {
         const ssdSnapshot = await get(ref(database, '/SSD-products'));
         const lovetSnapshot = await get(ref(database, '/lovet-products'));
+        const ttrSnapshot = await get(ref(database, '/TTR-products'));
 
         const ssdProducts = ssdSnapshot.exists() ? Object.values(ssdSnapshot.val()) : [];
         const lovetProducts = lovetSnapshot.exists() ? Object.values(lovetSnapshot.val()) : [];
+        const ttrProducts = ttrSnapshot.exists() ? Object.values(ttrSnapshot.val()) : [];
 
-        setProducts([...ssdProducts, ...lovetProducts]);
+        setProducts([...ssdProducts, ...lovetProducts, ...ttrProducts]);
       } catch (error) {
         console.error("Error fetching products:", error);
       }

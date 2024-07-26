@@ -100,7 +100,7 @@ const FilterBar = ({ applyFilters }) => {
               <h3>Blogshop</h3>
               <div className='underline'></div>
               <div className='filter-options'>
-                {['Lovet', 'SSD'].map((blogshop) => (
+                {['Lovet', 'SSD', 'TTR'].map((blogshop) => (
                   <label key={blogshop}>
                     <input
                       type="checkbox"
