@@ -6,6 +6,8 @@ import { useUser } from '../UserContext/UserContext';
 import { getFirestore, doc, setDoc } from 'firebase/firestore';
 import './Auth.css';
 
+import logo from '../Assets/google_logo.png';
+
 const Auth = () => {
   const { login } = useUser();
   const [isSignUp, setIsSignUp] = useState(true);
@@ -98,9 +100,10 @@ const Auth = () => {
             </div>
             <button className="btn" id="submitSignUp" type="submit">Sign Up</button>
           </form>
-          <p className="or">----------or--------</p>
-          <div className="icons">
-            <i className="fab fa-google" onClick={handleGoogleSignIn}></i>
+          <p className="or">----------or---------</p>
+          <div className="google-sign-in" onClick={handleGoogleSignIn}>
+            <img src={logo} alt="Google Sign-In" />
+            <span>Sign in with Google</span>
           </div>
           <div className="links">
             <p>Already Have Account?</p>
@@ -124,7 +127,7 @@ const Auth = () => {
 
             <button className="btn" id="submitSignIn" type="submit">Sign In</button>
           </form>
-          <p className="or">----------or--------</p>
+          <p className="or">----------or---------</p>
           <div className="icons">
             <i className="fab fa-google" onClick={handleGoogleSignIn}></i>
           </div>

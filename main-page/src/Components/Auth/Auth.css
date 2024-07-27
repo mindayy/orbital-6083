@@ -30,22 +30,24 @@ input{
     width:100%;
     background-color:transparent;
     border:none;
-    border-bottom:1px solid #757575;
+    border-bottom:1px solid #70503F;
     padding-left:1.5rem;
     font-size:15px;
 }
 .input-group{
-    padding:1% 0;
+    padding: 2% 0;
     position:relative;
 }
 .input-group i{
     position:absolute;
+    display: flex;
+    flex-direction: column;
     color:black;
 }
 input:focus{
     background-color: transparent;
     outline:transparent;
-    border-bottom:2px solid hsl(327,90%,28%);
+    border-bottom:2px solid #70503F;
 }
 input::placeholder{
     color:transparent;
@@ -53,7 +55,6 @@ input::placeholder{
 label{
     color:#757575;
     position:relative;
-    left:1.2em;
     top:-1.3em;
     cursor:auto;
     transition:0.3s ease all;
@@ -80,10 +81,11 @@ button{
     font-size:1.1rem;
     padding:8px 0;
     border-radius:5px;
+    margin-top: -4px;
     outline:none;
     border:none;
     width:100%;
-    background:rgb(125,125,235);
+    background:#E0B4FF;
     color:white;
     cursor:pointer;
     transition:0.9s;
@@ -93,27 +95,50 @@ button:hover{
 }
 .or{
     font-size:1.1rem;
-    margin-top:0.5rem;
+    margin-top:5px;
+    margin-bottom: 20px;
     text-align:center;
+
 }
-.icons{
-    text-align:center;
+
+.google-sign-in {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px 10px;
+    border: 2px solid #4285F4;
+    border-radius: 5px;
+    background-color: white;
+    color: #4285F4;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s, box-shadow 0.3s;
+    margin: 0 50px;
+    margin-top: -10px;
 }
-.icons i{
-    color:rgb(125,125,235);
-    padding:0.8rem 1.5rem;
-    border-radius:10px;
-    font-size:1.5rem;
-    cursor:pointer;
-    border:2px solid #dfe9f5;
-    margin:0 15px;
-    transition:1s;
+
+.google-sign-in img {
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
 }
-.icons i:hover{
-    background:#07001f;
-    font-size:1.6rem;
-    border:2px solid rgb(125,125,235);
+
+.google-sign-in span {
+    display: inline-block;
 }
+
+.google-sign-in:hover {
+  background-color: #4285F4;
+  color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.google-sign-in:hover img {
+  filter: brightness(0) invert(1); /* Change icon color to white on hover */
+}
+
+
 .links{
     display:flex;
     justify-content:space-around;
@@ -122,7 +147,7 @@ button:hover{
     font-weight:bold;
 }
 #signUpButton, #signInButton{
-    color:rgb(125,125,235);
+    color: #9b5fd4;
     border:none;
     background-color:transparent;
     font-size:1rem;
