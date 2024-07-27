@@ -62,7 +62,7 @@ const scrapeData = async () => {
                     // extract available sizes
                     const sizesList = Array.from(product.querySelectorAll('.hc-collections-size__size'))
                         .filter(sizeElement => !sizeElement.classList.contains('hc-soldout'))
-                        .map(sizeElement => sizeElement.querySelector('div').textContent.trim());
+                        .map(sizeElement => mapSize(sizeElement.querySelector('div').textContent.trim()));
                         
                     console.log(shop, title, price, imageUrl, productUrl, sizesList);
                     data.push({ shop, title, price, imageUrl, productUrl, sizesList });

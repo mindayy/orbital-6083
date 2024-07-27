@@ -18,11 +18,13 @@ const SearchResults = ({ searchQuery }) => {
         const productsRef2 = ref(database, '/lovet-products');
         const productsRef3 = ref(database, '/TTR-products')
         const productsRef4 = ref(database, '/TTT-products')
+        const productsRef5 = ref(database, '/supergurl-products')
 
         const snapshot1 = await get(productsRef1);
         const snapshot2 = await get(productsRef2);
         const snapshot3 = await get(productsRef3);
         const snapshot4 = await get(productsRef4);
+        const snapshot5 = await get(productsRef5);
 
         let productsArray = [];
 
@@ -60,6 +62,15 @@ const SearchResults = ({ searchQuery }) => {
             ...productsData4[key],
           }));
           productsArray = [...productsArray, ...productsArray4];
+        }
+
+        if (snapshot5.exists()) {
+          const productsData5 = snapshot5.val();
+          const productsArray5 = Object.keys(productsData5).map((key) => ({
+            id: key,
+            ...productsData5[key],
+          }));
+          productsArray = [...productsArray, ...productsArray5];
         }
 
         // Filter products based on keywords
