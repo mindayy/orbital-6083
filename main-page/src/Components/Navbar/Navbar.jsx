@@ -1,7 +1,8 @@
-import React, { useState } from 'react'; // Import useState
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useWishlist } from '../WishlistContext/WishlistContext';
-import { useUser } from '../UserContext/UserContext'; // Correct import path
+import { useUser } from '../UserContext/UserContext';
+import { getAuth, signOut } from 'firebase/auth';
 import './Navbar.css';
 
 import logo from '../Assets/logo.png';
@@ -10,10 +11,11 @@ import profile from '../Assets/profile.png';
 import likes from '../Assets/likes.png';
 
 const Navbar = () => {
-    const { user } = useUser(); // Destructure user from useUser
+    const { user } = useUser();
     const { wishlist } = useWishlist();
-    const [searchQuery, setSearchQuery] = useState(''); // Define useState
+    const [searchQuery, setSearchQuery] = useState('');
     const navigate = useNavigate();
+    const auth = getAuth();
 
     const handleSearchChange = (event) => {
         setSearchQuery(event.target.value);
@@ -24,6 +26,12 @@ const Navbar = () => {
         if (searchQuery.trim() !== '') {
             navigate(`/search?query=${encodeURIComponent(searchQuery)}`);
         }
+    };
+
+    const handleLogout = () => {
+        signOut(auth).then(() => {
+            navigate('/');
+        });
     };
 
     const getWishlistCount = () => {
@@ -51,19 +59,29 @@ const Navbar = () => {
                 </form>
             </div>
             <div className='nav-profile'>
-                <Link to="/profile">
-                    <img src={profile} alt='Profile' />
-                </Link>
                 {user ? (
-                    <span>{user.username}</span>
+                    <>
+                        <span>{user.username || user.email}</span>
+                        <button onClick={handleLogout} className="navbar-logout-button">Log Out</button>
+                        <Link to="/profile">
+                            <img src={profile} alt='Profile' />
+                        </Link>
+                        <Link to="/profile">
+                            <img src={likes} alt='Likes' />
+                        </Link>
+                    </>
                 ) : (
-                    <button onClick={() => navigate('/auth')}>Sign Up | Login</button>
+                    <>
+                        <button onClick={() => navigate('/auth')} className="navbar-auth-button">Sign Up | Login</button>
+                        <Link to="/profile">
+                            <img src={profile} alt='Profile' />
+                        </Link>
+                    </>
                 )}
-                <Link to="/profile">
-                    <img src={likes} alt='Likes' />
-                </Link>
             </div>
-            <div className='nav-likes-count'>{getWishlistCount()}</div>
+            {user && (
+                <div className='nav-likes-count'>{getWishlistCount()}</div>
+            )}
         </div>
     );
 };

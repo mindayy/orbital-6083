@@ -2,11 +2,12 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { auth } from '../firebaseConfig';
-import { useUser } from '../UserContext/UserContext'; // Correct import path
+import { useUser } from '../UserContext/UserContext';
+import { getFirestore, doc, setDoc } from 'firebase/firestore';
 import './Auth.css';
 
 const Auth = () => {
-  const { login } = useUser(); // Destructure login from useUser
+  const { login } = useUser();
   const [isSignUp, setIsSignUp] = useState(true);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -16,6 +17,7 @@ const Auth = () => {
   const [error, setError] = useState("");
 
   const navigate = useNavigate();
+  const db = getFirestore();
 
   const toggleAuthMode = () => {
     setIsSignUp(!isSignUp);
@@ -23,45 +25,47 @@ const Auth = () => {
     setError("");
   };
 
-  const handleSignUp = (e) => {
+  const handleSignUp = async (e) => {
     e.preventDefault();
-    createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        setMessage("Successfully Registered");
-        setTimeout(() => {
-          setIsSignUp(false);
-          setMessage("");
-          navigate("/auth");
-        }, 2000); // Redirect after 2 seconds
-      })
-      .catch((error) => {
-        setError("Error signing up: " + error.message);
-      });
+    try {
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
+      await setDoc(doc(db, 'users', user.uid), { email: user.email, firstName: fName, lastName: lName });
+      setMessage("Successfully Registered");
+      setTimeout(() => {
+        setIsSignUp(false);
+        setMessage("");
+        navigate("/auth");
+      }, 2000);
+    } catch (error) {
+      setError("Error signing up: " + error.message);
+    }
   };
 
-  const handleSignIn = (e) => {
+  const handleSignIn = async (e) => {
     e.preventDefault();
-    signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        setMessage("Successfully Signed In");
-        login(userCredential.user.email); // Call login function
-        navigate("/profile");
-      })
-      .catch((error) => {
-        setError("Error signing in: " + error.message);
-      });
+    try {
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
+      await login(user.email); // Call login function
+      setMessage("Successfully Signed In");
+      navigate("/profile");
+    } catch (error) {
+      setError("Error signing in: " + error.message);
+    }
   };
 
-  const handleGoogleSignIn = () => {
+  const handleGoogleSignIn = async () => {
     const provider = new GoogleAuthProvider();
-    signInWithPopup(auth, provider)
-      .then((result) => {
-        const user = result.user;
-        login(user.email); // Call login function
-        navigate("/profile");
-      }).catch((error) => {
-        setError("Error signing in with Google: " + error.message);
-      });
+    try {
+      const result = await signInWithPopup(auth, provider);
+      const user = result.user;
+      await login(user.email); // Call login function
+      setMessage("Successfully Signed In");
+      navigate("/profile");
+    } catch (error) {
+      setError("Error signing in with Google: " + error.message);
+    }
   };
 
   return (
