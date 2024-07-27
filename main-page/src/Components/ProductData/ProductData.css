@@ -12,7 +12,6 @@
     color: #70503F;
     text-align: left;
     font-size: 20px;
-    
 }
 
 .products-list {
@@ -105,10 +104,20 @@
     font-size: 12px;
     font-weight: 550;
     color: white;
- 
+
 }
 
  .loading-text {
     color: #70503F;
  }
+ 
+.title-wishlist {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
 
+.title-wishlist h4 {
+    margin-right: 15px;
+    flex: 1
+}

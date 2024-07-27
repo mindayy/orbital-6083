@@ -67,18 +67,20 @@ const ProductData = ({ products }) => {
                 )}
               </div>
               <div className="product-info">
-                <h4>
-                  <a href={product.productUrl} target="_blank" rel="noopener noreferrer">
-                    {capitaliseFirstLetter(product.title)}
-                  </a>
-                </h4>
+                <div className="title-wishlist">
+                  <h4>
+                    <a href={product.productUrl} target="_blank" rel="noopener noreferrer">
+                      {capitaliseFirstLetter(product.title)}
+                    </a>
+                  </h4>
+                  <button 
+                    className="wishlist-button" 
+                    onClick={() => handleHeartClick(product)}
+                  >
+                    <img src={isProductInWishlist(product.id) ? filledHeartIcon : hollowHeartIcon} alt="Wishlist" />
+                  </button>
+                </div>
                 <p>${product.price.toFixed(2)}</p>
-                <button 
-                  className="wishlist-button" 
-                  onClick={() => handleHeartClick(product)}
-                >
-                  <img src={isProductInWishlist(product.id) ? filledHeartIcon : hollowHeartIcon} alt="Wishlist" />
-                </button>
               </div>
             </div>
           ))}
@@ -87,7 +89,7 @@ const ProductData = ({ products }) => {
         <p>No products available</p>
       )}
     </div>
-  );
+  );    
 };
 
 export default ProductData;

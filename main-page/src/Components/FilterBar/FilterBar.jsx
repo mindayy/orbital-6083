@@ -138,7 +138,7 @@ const FilterBar = ({ applyFilters }) => {
               <h3>Size</h3>
               <div className='underline'></div>
               <div className='filter-options'>
-                {['XXXS', 'XXS', 'XS', 'S', 'M', 'L', 'XL', 'XXL', 'XXXL'].map((size) => (
+                {['XXS', 'XS', 'S', 'M', 'L', 'XL', 'XXL', 'XXXL'].map((size) => (
                   <label key={size}>
                     <input
                       type="checkbox"

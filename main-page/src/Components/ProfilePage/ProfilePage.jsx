@@ -115,6 +115,19 @@ const ProfilePage = () => {
     }
   };
 
+  const capitaliseFirstLetter = (text) => {
+    return text
+      .split(' ')
+      .map(word => {
+        if (word.startsWith('(')) {
+          return '(' + word.charAt(1).toUpperCase() + word.slice(2).toLowerCase(); 
+        }
+        return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+      })
+      .join(' ');
+  };
+
+
   if (!user) {
     return (
       <div className="not-logged-in-container">
@@ -127,7 +140,7 @@ const ProfilePage = () => {
 
   return (
     <div className="profile-container">
-      <h1>Profile Page</h1>
+      <h1>Profile</h1>
       {message && <div className="success-message">{message}</div>}
       {error && <div className="error-message">{error}</div>}
       <div className="profile-header">
@@ -160,7 +173,8 @@ const ProfilePage = () => {
                 <img src={product.imageUrl} alt={product.title} className="wishlist-item-image" />
                 <div className="wishlist-item-info">
                   <h3>
-                    <a href={product.productUrl} target="_blank" rel="noopener noreferrer">{product.title}</a>
+                    <a href={product.productUrl} target="_blank" rel="noopener noreferrer">{capitaliseFirstLetter(product.title)}</a>
+                    <p>${product.price.toFixed(2)}</p>
                   </h3>
                   <button 
                     className="wishlist-button" 
