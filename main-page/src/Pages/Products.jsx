@@ -27,13 +27,15 @@ const Products = () => {
         const lovetSnapshot = await get(ref(database, '/lovet-products'));
         const ttrSnapshot = await get(ref(database, '/TTR-products'));
         const tttSnapshot = await get(ref(database, '/TTT-products'));
+        const neonmelloSnapshot = await get(ref(database, '/neonmello-products'));
 
         const ssdProducts = ssdSnapshot.exists() ? Object.values(ssdSnapshot.val()) : [];
         const lovetProducts = lovetSnapshot.exists() ? Object.values(lovetSnapshot.val()) : [];
         const ttrProducts = ttrSnapshot.exists() ? Object.values(ttrSnapshot.val()) : [];
         const tttProducts = tttSnapshot.exists() ? Object.values(tttSnapshot.val()) : [];
-
-        setProducts([...ssdProducts, ...lovetProducts, ...ttrProducts, ...tttProducts]);
+        const neonmelloProducts = neonmelloSnapshot.exists() ? Object.values(neonmelloSnapshot.val()) : [];
+        
+        setProducts([...ssdProducts, ...lovetProducts, ...ttrProducts, ...tttProducts, ...neonmelloProducts]);
       } catch (error) {
         console.error("Error fetching products:", error);
       }

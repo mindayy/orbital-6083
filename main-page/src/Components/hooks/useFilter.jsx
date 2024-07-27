@@ -12,7 +12,7 @@ const useFilter = (products) => {
   // sort items into categories based on keywords
   const getCategory = (title) => {
     const keywords = {
-      Tops: ['top', 'shirt', 'tee', 'cardi', 'blouse', 'tube', 'crew neck', 'offsie', 'bralet', 'tank', 'toga', 'cami'],
+      Tops: ['top', 'shirt', 'tee', 'blouse', 'tube', 'crew neck', 'offsie', 'bralet', 'tank', 'toga', 'cami'],
       Dresses: ['dress', 'romper', 'gown'],
       Outerwear: ['jacket', 'cardi', 'cardigan', 'pullover', 'hoodie', 'vest', 'blazer'],
       Pants: ['jeans', 'culottes', 'joggers', 'pants', 'trousers'],
@@ -43,7 +43,7 @@ const useFilter = (products) => {
         'biscuit', 'malt', 'flax', 'linen', 'truffle', 'gold'],
       Black: ['black', 'liquorice', 'sesame', 'ink'],
       Brown: ['brown', 'rust', 'tann', 'oak', 'mocha', 'cocoa', 'espresso', 'coffee', 
-        'toffee', 'tortila', 'tortilla', 'caramel', 'auburn', 'walnut', 'mahogany', 'camel', 'tan',
+        'toffee', 'tortila', 'tortilla', 'caramel', 'auburn', 'walnut', 'mahogany', 'camel',
         'chocolate', 'copper', 'nut'],
       Grey: ['grey', 'gray', 'gunmetal', 'greige', 'clay', 'charcoal', 'rosewood', 'etoupe', 'stone', 'graphite',
         'sesame', 'space', 'fog', 'silver'],
@@ -68,6 +68,8 @@ const useFilter = (products) => {
     }
     return 'Patterned';
   };
+
+  
 
   // filter by blogshops, categories, sizes, colours and price
   const applyFilters = useCallback(() => {
