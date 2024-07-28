@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { database } from '../firebaseConfig/index';
 import { ref, get } from 'firebase/database';
+import { useWishlist } from '../WishlistContext/WishlistContext';
 import '../ProductData/ProductData.css'; 
 
 const SearchResults = ({ searchQuery }) => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const { addToWishlist, removeFromWishlist, isProductInWishlist } = useWishlist();
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -108,19 +110,24 @@ const SearchResults = ({ searchQuery }) => {
           {products.map((product) => (
             <div key={product.id} className="product-item">
               <h3>{product.shop}</h3>
-                <div className="size-list">
-                    {product.sizesList && product.sizesList.length > 0 && (
-                      <ul>
-                        {product.sizesList.map((size, index) => (
-                          <li key={index}>{size}</li>
-                        ))}
-                      </ul>
-                    )}
-                  </div>
+              <div className="size-list">
+                {product.sizesList && product.sizesList.length > 0 && (
+                  <ul>
+                    {product.sizesList.map((size, index) => (
+                      <li key={index}>{size}</li>
+                    ))}
+                  </ul>
+                )}
+              </div>
               <img src={product.imageUrl} alt={product.title} />
               <div className="product-info">
                 <h4><a href={product.productUrl} target="_blank" rel="noopener noreferrer">{product.title}</a></h4>
                 <p>${product.price.toFixed(2)}</p>
+                {isProductInWishlist(product.id) ? (
+                  <button onClick={() => removeFromWishlist(product.id)}>Remove from Wishlist</button>
+                ) : (
+                  <button onClick={() => addToWishlist(product)}>Add to Wishlist</button>
+                )}
               </div>
             </div>
           ))}
