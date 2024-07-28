@@ -2,13 +2,28 @@ import React, { useState, useEffect } from 'react';
 import { database } from '../firebaseConfig/index';
 import { ref, get } from 'firebase/database';
 import { useWishlist } from '../WishlistContext/WishlistContext';
-import '../ProductData/ProductData.css'; 
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import { useNavigate } from 'react-router-dom';
+import hollowHeartIcon from '../Assets/likes.png';
+import filledHeartIcon from '../Assets/filledheart.png';
+import '../ProductData/ProductData.css';
 
 const SearchResults = ({ searchQuery }) => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [user, setUser] = useState(null);
   const { addToWishlist, removeFromWishlist, isProductInWishlist } = useWishlist();
+  const navigate = useNavigate();
+  const auth = getAuth();
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+    });
+
+    return () => unsubscribe();
+  }, [auth]);
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -18,9 +33,9 @@ const SearchResults = ({ searchQuery }) => {
       try {
         const productsRef1 = ref(database, '/SSD-products');
         const productsRef2 = ref(database, '/lovet-products');
-        const productsRef3 = ref(database, '/TTR-products')
-        const productsRef4 = ref(database, '/TTT-products')
-        const productsRef5 = ref(database, '/supergurl-products')
+        const productsRef3 = ref(database, '/TTR-products');
+        const productsRef4 = ref(database, '/TTT-products');
+        const productsRef5 = ref(database, '/supergurl-products');
 
         const snapshot1 = await get(productsRef1);
         const snapshot2 = await get(productsRef2);
@@ -76,16 +91,14 @@ const SearchResults = ({ searchQuery }) => {
         }
 
         // Filter products based on keywords
-        const keywords = searchQuery.toLowerCase().split(" "); // split keywords
+        const keywords = searchQuery.toLowerCase().split(' '); // split keywords
         const filteredProducts = productsArray.filter((product) =>
-          keywords.every((keyword) =>
-          product.title.toLowerCase().includes(keyword)
-          )
+          keywords.every((keyword) => product.title.toLowerCase().includes(keyword))
         );
 
         setProducts(filteredProducts);
       } catch (error) {
-        console.error("Error fetching products:", error);
+        console.error('Error fetching products:', error);
         setError(error.message);
       } finally {
         setLoading(false);
@@ -94,6 +107,19 @@ const SearchResults = ({ searchQuery }) => {
 
     fetchProducts();
   }, [searchQuery]);
+
+  const handleHeartClick = (product) => {
+    if (!user) {
+      alert('You need to be logged in to add items to your wishlist.');
+      navigate('/auth'); // Redirect to login/signup page
+      return;
+    }
+    if (isProductInWishlist(product.id)) {
+      removeFromWishlist(product.id);
+    } else {
+      addToWishlist(product);
+    }
+  };
 
   if (loading) {
     return <p className="loading-message">Loading...</p>;
@@ -121,13 +147,18 @@ const SearchResults = ({ searchQuery }) => {
               </div>
               <img src={product.imageUrl} alt={product.title} />
               <div className="product-info">
-                <h4><a href={product.productUrl} target="_blank" rel="noopener noreferrer">{product.title}</a></h4>
+                <h4>
+                  <a href={product.productUrl} target="_blank" rel="noopener noreferrer">
+                    {product.title}
+                  </a>
+                </h4>
                 <p>${product.price.toFixed(2)}</p>
-                {isProductInWishlist(product.id) ? (
-                  <button onClick={() => removeFromWishlist(product.id)}>Remove from Wishlist</button>
-                ) : (
-                  <button onClick={() => addToWishlist(product)}>Add to Wishlist</button>
-                )}
+                <button className="wishlist-button" onClick={() => handleHeartClick(product)}>
+                  <img
+                    src={isProductInWishlist(product.id) ? filledHeartIcon : hollowHeartIcon}
+                    alt="Wishlist"
+                  />
+                </button>
               </div>
             </div>
           ))}
