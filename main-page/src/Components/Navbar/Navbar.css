@@ -130,3 +130,32 @@
     color: white;
     background: #70503F;
 }
+
+/* Style for advanced search button */
+.nav-advanced-search {
+    display: flex;
+    align-items: center;
+    margin-left: 10px; /* Adjust as needed */
+}
+
+.nav-advanced-search button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    width: 40px; /* Adjust size as needed */
+    height: auto;
+}
+
+.nav-advanced-search button img {
+    height: 30px; /* Adjust size as needed */
+    width: 30px;
+}
+
+.nav-advanced-search button:hover {
+    background-color: #F6EAFF; /* Adjust hover color as needed */
+}

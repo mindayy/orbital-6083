@@ -9,6 +9,7 @@ import logo from '../Assets/logo.png';
 import search from '../Assets/search.png';
 import profile from '../Assets/profile.png';
 import likes from '../Assets/likes.png';
+import advancedSearch from '../Assets/advanced-search.png'; // Add your advanced search icon here
 
 const Navbar = () => {
     const { user } = useUser();
@@ -57,6 +58,13 @@ const Navbar = () => {
                         <img src={search} alt='Search' />
                     </button>
                 </form>
+            </div>
+            <div className='nav-advanced-search'>
+                <Link to="/advanced-search">
+                    <button>
+                        <img src={advancedSearch} alt='Advanced Search' />
+                    </button>
+                </Link>
             </div>
             <div className='nav-profile'>
                 {user ? (

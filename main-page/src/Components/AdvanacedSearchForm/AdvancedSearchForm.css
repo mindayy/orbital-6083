@@ -1,0 +1,41 @@
+.advanced-search-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding: 20px;
+}
+
+.advanced-search-form label {
+    font-size: 14px;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.advanced-search-form input[type="file"],
+.advanced-search-form input[type="url"] {
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 100%;
+}
+
+.advanced-search-form button {
+    padding: 10px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.advanced-search-form button:hover {
+    background-color: #0056b3;
+}
+
+.advanced-search-form div {
+    display: flex;
+    flex-direction: column;
+}
